@@ -1,11 +1,11 @@
 {
   "manifest_version": 2,
   "version": "0.0.1",
-  "short_name": "React App",
-  "name": "Create React App Sample",
-  "description": "Sample application showing how to create an extension with Create React App",
+  "short_name": "Fractal-Wallet",
+  "name": "Fractal Data Wallet",
+  "description": "Wallet Proof Of Concept for Fractal Protocol.",
   "browser_action": {
-    "default_title": "CRE",
+    "default_title": "fractal-wallet",
     "default_popup": "popup.html"
   },
   "background": {

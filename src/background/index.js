@@ -1,3 +1,11 @@
+import { wrapStore } from 'webext-redux';
+
+import createStore from '../redux';
+
+const store = createStore();
+
+wrapStore(store);
+
 // If your extension doesn't need a background script, just leave this file empty
 
 messageInBackground();
