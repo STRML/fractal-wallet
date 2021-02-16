@@ -1,19 +1,12 @@
-// If your extension doesn't need a content script, just leave this file empty
+/* global chrome */
 
-// This is an example of a script that will run on every page. This can alter pages
-// Don't forget to change `matches` in manifest.json if you want to only change specific webpages
-printAllPageLinks();
+export function injectScript(file) {
+  const script = document.createElement("script");
+  script.setAttribute("type", "text/javascript");
+  script.setAttribute("src", file);
 
-// This needs to be an export due to typescript implementation limitation of needing '--isolatedModules' tsconfig
-export function printAllPageLinks() {
-  const allLinks = Array.from(document.querySelectorAll('a')).map(
-    link => link.href
-  );
-
-  console.log('-'.repeat(30));
-  console.log(
-    `These are all ${allLinks.length} links on the current page that have been printed by the Sample Create React Extension`
-  );
-  console.log(allLinks);
-  console.log('-'.repeat(30));
+  document.head.appendChild(script);
 }
+
+const sdk = chrome.runtime.getURL("sdk.bundle.js");
+injectScript(sdk, "body");

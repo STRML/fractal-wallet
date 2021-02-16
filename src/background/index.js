@@ -1,17 +1,7 @@
-import { wrapStore } from 'webext-redux';
+import { wrapStore } from "webext-redux";
 
-import createStore from '../redux';
+import createStore from "../redux";
 
 const store = createStore();
 
 wrapStore(store);
-
-// If your extension doesn't need a background script, just leave this file empty
-
-messageInBackground();
-
-// This needs to be an export due to typescript implementation limitation of needing '--isolatedModules' tsconfig
-export function messageInBackground() {
-  console.log('I can run your javascript like any other code in your project');
-  console.log('just do not forget, I cannot render anything !');
-}
