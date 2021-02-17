@@ -1,4 +1,4 @@
-class Response {
+export default class Response {
   constructor(method, value, id, success = true) {
     this.id = id || Date.now();
     this.method = method;
@@ -21,5 +21,3 @@ class Response {
     return new Response(method, value, id, success);
   }
 }
-
-export default Response;

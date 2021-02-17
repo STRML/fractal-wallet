@@ -1,17 +1,17 @@
 const INPAGE = "fractal-inpage";
 const CONTENT_SCRIPT = "fractal-contentscript";
 
-export const baseParams = {
+export const base = {
   inpage: INPAGE,
   contentScript: CONTENT_SCRIPT,
 };
 
-export const inpageParams = {
+export const inpage = {
   name: INPAGE,
   target: CONTENT_SCRIPT,
 };
 
-export const contentScriptParams = {
+export const contentScript = {
   name: CONTENT_SCRIPT,
   target: INPAGE,
 };

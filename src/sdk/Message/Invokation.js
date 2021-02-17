@@ -1,4 +1,4 @@
-class Invokation {
+export default class Invokation {
   constructor(method, args = [], id = null) {
     this.id = id || Date.now();
     this.method = method;
@@ -19,5 +19,3 @@ class Invokation {
     return new Invokation(method, args, id);
   }
 }
-
-export default Invokation;
