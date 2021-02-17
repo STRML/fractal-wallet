@@ -44,6 +44,7 @@
     "mirror-creator": "^1.1.0",
     "optimize-css-assets-webpack-plugin": "5.0.4",
     "pnp-webpack-plugin": "1.6.4",
+    "post-message-stream": "^3.0.0",
     "postcss-flexbugs-fixes": "4.2.1",
     "postcss-loader": "3.0.0",
     "postcss-normalize": "8.0.1",
