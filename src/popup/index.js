@@ -1,10 +1,10 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Store } from 'webext-redux';
-import { Provider as ReduxProvider } from 'react-redux';
+import React from "react";
+import ReactDOM from "react-dom";
+import { Store } from "webext-redux";
+import { Provider as ReduxProvider } from "react-redux";
 
-import './Popup.css';
-import Popup from './Popup';
+import "./Popup.css";
+import Popup from "./Popup";
 
 const store = new Store();
 
@@ -15,5 +15,5 @@ store.ready()
     <ReduxProvider store={store}>
       <Popup/>
     </ReduxProvider>
-    , document.getElementById('popup'));
+    , document.getElementById("popup"));
 });

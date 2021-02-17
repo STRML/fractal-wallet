@@ -1,23 +1,28 @@
-import mirrorCreator from 'mirror-creator';
-import { createActions, handleActions } from 'redux-actions';
+import mirrorCreator from "mirror-creator";
+import { createActions, handleActions } from "redux-actions";
 
 const types = mirrorCreator([
-    'STARTUP',
+    "GENERATE_IDENTITY",
+    "SET_MNEMONIC"
 ]);
 
 export const creators = createActions(
-    types.STARTUP,
+    types.GENERATE_IDENTITY,
+    types.SET_MNEMONIC,
 );
 
-export const initialState = {};
+export const initialState = {
+    mnemonic: "",
+};
 
 export const reducer = handleActions(
     {
-        [types.STARTUP]: (state, { payload }) => (
+        [types.SET_MNEMONIC]: (state, { payload: mnemonic }) => (
             Object.freeze({
                 ...state,
+                mnemonic,
             })
-        ),
+        )
     },
     initialState,
 );

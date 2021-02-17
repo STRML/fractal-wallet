@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@babel/core": "7.12.3",
+    "@kiltprotocol/sdk-js": "^0.19.0",
     "@svgr/webpack": "5.5.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
@@ -56,6 +57,8 @@
     "react-redux": "^7.2.2",
     "redux": "^4.0.5",
     "redux-actions": "^2.6.5",
+    "redux-mock-store": "^1.5.4",
+    "redux-thunk": "^2.3.0",
     "resolve": "1.18.1",
     "resolve-url-loader": "^3.1.2",
     "sass-loader": "^10.0.5",
@@ -114,7 +117,7 @@
       "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}"
     ],
     "testEnvironment": "jsdom",
-    "testRunner": "/Users/frm/Developer/subvisual/fractal/wallet/node_modules/jest-circus/runner.js",
+    "testRunner": "<rootDir>/node_modules/jest-circus/runner.js",
     "transform": {
       "^.+\\.(js|jsx|mjs|cjs|ts|tsx)$": "<rootDir>/config/jest/babelTransform.js",
       "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",

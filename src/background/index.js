@@ -1,7 +1,8 @@
-import { wrapStore } from "webext-redux";
+import { alias, wrapStore } from "webext-redux";
 
 import createStore from "../redux";
+import aliases from "./aliases";
 
-const store = createStore();
+const store = createStore(alias(aliases));
 
 wrapStore(store);
