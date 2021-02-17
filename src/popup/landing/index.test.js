@@ -2,15 +2,15 @@ import { Provider } from "react-redux"
 import configureStore from "redux-mock-store"
 import { render } from "@testing-library/react";
 
-import Popup from "./Popup";
+import Landing from "@popup/landing";
 
-describe("Popup", () => {
+describe("Landing", () => {
   const mockStore = configureStore();
 
   it("renders title, description and button", () => {
     const store = mockStore({});
 
-    const { getByText, getByRole } = render(<Provider store={store}><Popup /></Provider>);
+    const { getByText, getByRole } = render(<Provider store={store}><Landing /></Provider>);
 
     const title = getByText("Welcome!");
     const description = getByText("Press the below button to setup a kilt identity.");

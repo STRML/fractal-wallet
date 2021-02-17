@@ -1,5 +1,5 @@
-import logo from "../assets/logo.svg";
-import "./Options.css";
+import logo from "@assets/logo.svg";
+import "@options/Options.css";
 
 function Options() {
   return (

@@ -1,11 +1,11 @@
 import { useDispatch } from "react-redux";
 
-import appActions from "../redux/app";
+import appActions from "@redux/app";
 
-import logo from "../assets/logo.svg";
-import "./Popup.css";
+import logo from "@assets/logo.svg";
+import "@popup/styles.css";
 
-function Popup() {
+function Landing() {
   const dispatch = useDispatch();
   const handleClick = () => dispatch(appActions.generateIdentity());
 
@@ -25,4 +25,4 @@ function Popup() {
   );
 }
 
-export default Popup;
+export default Landing;

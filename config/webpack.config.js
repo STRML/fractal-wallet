@@ -286,6 +286,16 @@ module.exports = function (webpackEnv) {
           "react-dom$": "react-dom/profiling",
           "scheduler/tracing": "scheduler/tracing-profiling",
         }),
+        // Project aliases
+        "@src": path.resolve(__dirname, '../src/'),
+        "@assets": path.resolve(__dirname, '../src/assets/'),
+        "@background": path.resolve(__dirname, '../src/background/'),
+        "@contentScript": path.resolve(__dirname, '../src/contentScript/'),
+        "@options": path.resolve(__dirname, '../src/options/'),
+        "@popup": path.resolve(__dirname, '../src/popup/'),
+        "@redux": path.resolve(__dirname, '../src/redux/'),
+        "@sdk": path.resolve(__dirname, '../src/sdk/'),
+        "@services": path.resolve(__dirname, '../src/services/'),
         ...(modules.webpackAliases || {}),
       },
       plugins: [

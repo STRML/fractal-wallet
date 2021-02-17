@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@src/*": ["src/*"],
+      "@assets/*": ["src/assets/*"],
+      "@background/*": ["src/background/*"],
+      "@contentScript/*": ["src/contentScript/*"],
+      "@options/*": ["src/options/*"],
+      "@popup/*": ["src/popup/*"],
+      "@redux/*": ["src/redux/*"],
+      "@sdk/*": ["src/sdk/*"],
+      "@services/*": ["src/services/*"]
+    }
+  },
+  "exclude": ["node_modules", "build", "dev"]
+}

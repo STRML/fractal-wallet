@@ -60,6 +60,7 @@
     "redux-actions": "^2.6.5",
     "redux-mock-store": "^1.5.4",
     "redux-thunk": "^2.3.0",
+    "reselect": "^4.0.0",
     "resolve": "1.18.1",
     "resolve-url-loader": "^3.1.2",
     "sass-loader": "^10.0.5",
@@ -131,7 +132,16 @@
     "modulePaths": [],
     "moduleNameMapper": {
       "^react-native$": "react-native-web",
-      "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy"
+      "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy",
+      "^\\@src(.*)$": "<rootDir>/src/$1",
+      "^\\@assets(.*)$": "<rootDir>/src/assets/$1",
+      "^\\@background(.*)$": "<rootDir>/src/background/$1",
+      "^\\@contentScript(.*)$": "<rootDir>/src/contentScript/$1",
+      "^\\@options(.*)$": "<rootDir>/src/options/$1",
+      "^\\@popup(.*)$": "<rootDir>/src/popup/$1",
+      "^\\@redux(.*)$": "<rootDir>/src/redux/$1",
+      "^\\@sdk(.*)$": "<rootDir>/src/sdk/$1",
+      "^\\@services(.*)$": "<rootDir>/src/services/$1"
     },
     "moduleFileExtensions": [
       "web.js",

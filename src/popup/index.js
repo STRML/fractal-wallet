@@ -1,19 +1,36 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { Store } from "webext-redux";
 import { Provider as ReduxProvider } from "react-redux";
 
-import "./Popup.css";
-import Popup from "./Popup";
+import App from "@popup/app";
+import Loading from "@popup/loading";
 
 const store = new Store();
 
-// wait for the store to connect to the background page
-store.ready()
-.then(() => {
-  ReactDOM.render(
+function Popup() {
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(function() {
+    async function setupStore() {
+      await store.ready();
+      setIsReady(true);
+    }
+
+    setupStore();
+  });
+
+  if (! isReady) {
+    return <Loading />;
+  }
+
+  return (
     <ReduxProvider store={store}>
-      <Popup/>
+      <App />
     </ReduxProvider>
-    , document.getElementById("popup"));
-});
+  );
+}
+
+ReactDOM.render(
+  <Popup />
+, document.getElementById("popup"));

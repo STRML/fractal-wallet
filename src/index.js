@@ -1,7 +1,7 @@
-import "./styles.css";
-import reportWebVitals from "./reportWebVitals";
+import "@src/styles.css";
+import reportWebVitals from "@src/reportWebVitals";
 
-require("./popup");
+require("@src/popup");
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

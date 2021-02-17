@@ -3,11 +3,13 @@ import { createActions, handleActions } from "redux-actions";
 
 const types = mirrorCreator([
     "GENERATE_IDENTITY",
+    "STARTUP",
     "SET_MNEMONIC"
 ]);
 
 export const creators = createActions(
     types.GENERATE_IDENTITY,
+    types.STARTUP,
     types.SET_MNEMONIC,
 );
 

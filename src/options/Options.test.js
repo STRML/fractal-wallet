@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import Options from "./Options";
+import Options from "@options/Options";
 
 test("renders learn react link", () => {
   render(<Options />);
