@@ -1,6 +1,8 @@
+import { v4 as uuidv4 } from "uuid";
+
 export default class Invokation {
   constructor(method, args = [], id = null) {
-    this.id = id || Date.now();
+    this.id = id || uuidv4();
     this.method = method;
     this.args = args;
   }
