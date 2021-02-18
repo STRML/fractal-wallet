@@ -1,20 +1,26 @@
+import React from "react";
 import { useSelector } from "react-redux";
 
 import { getMnemonic } from "@redux/selectors";
 
-import logo from "@assets/logo.svg";
 import "@popup/styles.css";
+
+import Data from "@popup/home/data";
 
 function Home() {
   const mnemonic = useSelector(getMnemonic);
 
   return (
     <div className="Popup">
-      <header className="Popup-header">
-        <img src={logo} className="Popup-logo" alt="logo" />
-        <h3>Home</h3>
-        <h4>{ mnemonic }</h4>
-      </header>
+      <h2><center>Home</center></h2>
+      <div>
+        <div>
+          <p><strong>Mnemonic</strong></p>
+          <p>{mnemonic}</p>
+        </div>
+        <br /><br />
+        <Data />
+      </div>
     </div>
   );
 }

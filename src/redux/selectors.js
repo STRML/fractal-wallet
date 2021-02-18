@@ -6,11 +6,19 @@ export const getMnemonic = createSelector(
 );
 
 export const isSignedIn = createSelector(
-    state => state.app,
-    app => app.mnemonic.length > 0,
+  state => state.app,
+  app => app.mnemonic.length > 0,
 );
 
-export default {
-    getMnemonic,
-    isSignedIn,
-};
+export const getData = createSelector(
+  state => state.app,
+  app => app.data,
+);
+
+const selectors = {
+  getMnemonic,
+  isSignedIn,
+  getData,
+}
+
+export default selectors;

@@ -2,7 +2,6 @@ import { useDispatch } from "react-redux";
 
 import appActions from "@redux/app";
 
-import logo from "@assets/logo.svg";
 import "@popup/styles.css";
 
 function Landing() {
@@ -11,16 +10,15 @@ function Landing() {
 
   return (
     <div className="Popup">
-      <header className="Popup-header">
-        <img src={logo} className="Popup-logo" alt="logo" />
-        <h3>Welcome!</h3>
+      <h2><center>Welcome</center></h2>
+      <div>
         <p>
           Press the below button to setup a kilt identity.
         </p>
-        <button onClick={handleClick}>
-          Setup
-        </button>
-      </header>
+      </div>
+      <button onClick={handleClick}>
+        Setup
+      </button>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { Store } from "webext-redux";
 import { Provider as ReduxProvider } from "react-redux";
@@ -11,7 +11,7 @@ const store = new Store();
 function Popup() {
   const [isReady, setIsReady] = useState(false);
 
-  useEffect(function() {
+  useEffect(() => {
     async function setupStore() {
       await store.ready();
       setIsReady(true);
@@ -20,7 +20,7 @@ function Popup() {
     setupStore();
   });
 
-  if (! isReady) {
+  if (!isReady) {
     return <Loading />;
   }
 
