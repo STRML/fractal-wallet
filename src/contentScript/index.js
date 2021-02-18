@@ -1,6 +1,6 @@
 /* global chrome */
 
-import ContentScriptConnection from "@sdk/Connection/ContentScriptConnection";
+import InpageConnection from "@sdk/Connection/InpageConnection";
 
 import { injectScript } from "./injector";
 
@@ -10,13 +10,11 @@ const FakeUser = { email: "user@example.org", name: "A User" };
 const sdk = chrome.runtime.getURL("sdk.bundle.js");
 injectScript(sdk);
 
-const stream = new ContentScriptConnection();
+const inpage = new InpageConnection();
 
-stream.on("verifyConnection", () => {
+inpage.on("verifyConnection", () => {
   const { version } = chrome.runtime.getManifest();
   return version;
 });
 
-stream.on("request", (field) => {
-  return FakeUser[field];
-});
+inpage.proxy("request");

@@ -1,6 +1,6 @@
-import InpageConnection from "@sdk/Connection/InpageConnection";
+import ExtensionConnection from "@sdk/Connection/ExtensionConnection";
 
-const stream = new InpageConnection();
+const stream = new ExtensionConnection();
 
 const verifyConnection = () => stream.invoke("verifyConnection");
 const request = (field) => stream.invoke("request", [field]);
