@@ -3,14 +3,16 @@ import { getData } from "@redux/selectors";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import DataTypes from '@background/Data/DataTypes';
+
 function renderValue(value, type) {
-  if (type === 'number') {
+  if (type === DataTypes.NUMBER) {
     return (
       <p>{Number(value)}</p>
     )
   }
 
-  if (type === 'object') {
+  if (type === DataTypes.OBJECT) {
     return (
       <p>{JSON.stringify(value, null, 2)}</p>
     )
@@ -28,14 +30,15 @@ function Data() {
 
   const [key, setKey] = useState("");
   const [value, setValue] = useState("");
-  const [type, setType] = useState("string");
+  const [type, setType] = useState(DataTypes.STRING);
 
   const addEntry = (event) => {
     if (key && value && type) {
-      dispatch(appActions.addDataEntry({ key, value, type, validated: false }));
+      dispatch(appActions.addDataEntry({ key, value, type }));
+
       setKey("");
       setValue("");
-      setType("string");
+      setType(DataTypes.STRING);
     }
     event.preventDefault();
   }
@@ -58,7 +61,7 @@ function Data() {
           </thead>
           <tbody>
             {data.map(elem => (
-              <tr key={elem.key}>
+              <tr key={elem.id}>
                 <td>{elem.key}</td>
                 <td>{renderValue(elem.value, elem.type)}</td>
                 <td>{elem.type}</td>
@@ -92,9 +95,7 @@ function Data() {
             value={type}
             onChange={event => setType(event.target.value)}
           >
-            <option value="string">String</option>
-            <option value="number">Number</option>
-            <option value="object">Object</option>
+            {Object.values(DataTypes).map(type => <option key={type} value={type}>{type}</option>)}
           </select>
           <br />
           <input type="submit" value="Create" />

@@ -26,7 +26,7 @@ function Popup() {
 
   return (
     <ReduxProvider store={store}>
-      <App />
+      <App isReady={isReady} />
     </ReduxProvider>
   );
 }

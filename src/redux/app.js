@@ -26,20 +26,16 @@ export const initialState = {
 
 export const reducer = handleActions(
   {
-    [types.SET_MNEMONIC]: (state, { payload: mnemonic }) => (
+    [types.SET_MNEMONIC]: (state, { payload: mnemonic }) =>
       Object.freeze({
         ...state,
         mnemonic,
-      })
-    ),
-    [types.SET_DATA]: (state, { payload: data }) => (
+      }),
+    [types.SET_DATA]: (state, { payload: data }) =>
       Object.freeze({
         ...state,
-        data: [
-          ...data,
-        ],
+        data,
       })
-    ),
   },
   initialState,
 );

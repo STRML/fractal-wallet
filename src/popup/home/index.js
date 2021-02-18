@@ -5,7 +5,7 @@ import { getMnemonic } from "@redux/selectors";
 
 import "@popup/styles.css";
 
-import Data from "@popup/home/data";
+import Data from "@popup/home/Data";
 
 function Home() {
   const mnemonic = useSelector(getMnemonic);

@@ -7,13 +7,16 @@ import { isSignedIn } from "@redux/selectors";
 import Home from "@popup/home";
 import Landing from "@popup/landing";
 
-function App() {
+function App(props) {
+  const { isReady } = props;
+
   const dispatch = useDispatch();
+
   const signIn = useSelector(isSignedIn);
 
-  useEffect(function() {
+  useEffect(() => {
     dispatch(appActions.startup());
-  });
+  }, [isReady, dispatch]);
 
   return (
     <>
