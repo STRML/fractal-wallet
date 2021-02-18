@@ -1,3 +1,7 @@
+import {
+  useHistory,
+  useLocation,
+} from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import appActions from "@redux/app";
@@ -5,8 +9,16 @@ import appActions from "@redux/app";
 import "@popup/styles.css";
 
 function Landing() {
+  let history = useHistory();
+  let location = useLocation();
+
   const dispatch = useDispatch();
-  const handleClick = () => dispatch(appActions.generateIdentity());
+
+  let { from } = location.state || { from: { pathname: "/" } };
+  const handleClick = async () => {
+    dispatch(appActions.generateIdentity())
+    .then(() => history.replace(from));
+  };
 
   return (
     <div className="Popup">

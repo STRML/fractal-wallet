@@ -1,9 +1,17 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
+
+import HomeRoutes from "@popup/middleware/HomeRoutes";
 
 import appActions from "@redux/app";
-import { isSignedIn } from "@redux/selectors";
 
+import DataIndex from "@popup/data";
+import DataCreate from "@popup/data/create";
 import Home from "@popup/home";
 import Landing from "@popup/landing";
 
@@ -12,17 +20,33 @@ function App(props) {
 
   const dispatch = useDispatch();
 
-  const signIn = useSelector(isSignedIn);
-
   useEffect(() => {
     dispatch(appActions.startup());
   }, [isReady, dispatch]);
 
   return (
-    <>
-      { ! signIn && <Landing />}
-      { signIn && <Home />}
-    </>
+    <Router>
+      <Switch>
+        <Route path="/landing">
+          <Landing />
+        </Route>
+        <HomeRoutes>
+          <Route path="/data">
+            <Switch>
+              <Route path="/data/create">
+                <DataCreate />
+              </Route>
+              <Route path="/">
+                <DataIndex />
+              </Route>
+            </Switch>
+          </Route>
+          <Route path="/">
+            <Home />
+          </Route>
+        </HomeRoutes>
+      </Switch>
+    </Router>
   );
 }
 
