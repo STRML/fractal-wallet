@@ -1,17 +1,25 @@
+/*
+ * Inpage -> Content Script : ExtensionConnection
+ * Script -> Inpage :  InpageConnection
+ *
+ * Script -> Background : Background Connection
+ * Background -> Script : ContentScriptConnection
+ */
+
 const INPAGE = "fractal-inpage";
 const CONTENT_SCRIPT = "fractal-contentscript";
-
-export const base = {
-  inpage: INPAGE,
-  contentScript: CONTENT_SCRIPT,
-};
+const BACKGROUND = "fractal-background";
 
 export const inpage = {
+  name: CONTENT_SCRIPT,
+  target: INPAGE,
+};
+
+export const extension = {
   name: INPAGE,
   target: CONTENT_SCRIPT,
 };
 
-export const contentScript = {
-  name: CONTENT_SCRIPT,
-  target: INPAGE,
+export const background = {
+  name: BACKGROUND,
 };
