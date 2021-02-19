@@ -1,19 +1,16 @@
 import LocalMessageDuplexStream from "post-message-stream";
 
-import MethodCallbacks from "@sdk/Callbacks/MethodCallbacks";
 import Invokation from "@sdk/Message/Invokation";
 import Response from "@sdk/Message/Response";
-import BackgroundConnection from "@sdk/Connection/BackgroundConnection";
 
 import { inpage } from "./params";
 
 export default class InpageConnection {
-  constructor() {
+  constructor(background) {
     this.stream = new LocalMessageDuplexStream(inpage);
-    this.background = new BackgroundConnection();
-    this.methodCallbacks = new MethodCallbacks();
-    this.proxy = new Set();
-    this.proxiedCallbacks = new MethodCallbacks(); // TODO: this needs a new class
+    this.proxiedMethods = new Set();
+    this.callbacks = {};
+    this.background = background;
 
     this._setupEvents();
   }
@@ -23,22 +20,25 @@ export default class InpageConnection {
     this.stream.on("data", this._handleData.bind(this));
   }
 
-  _isDeferred(method) {
-    return this.deferredMethods.isDeferred(method);
-  }
-
+  // calls a saved callback and sends a response
   _call(invokation) {
     const { method, args, id } = invokation;
+    const callback = this.callbacks[method];
 
-    const value = this.methodCallbacks.call(method, args);
+    if (!callback) throw new Error(`Undefined method ${method}`);
+
+    const value = callback(...args);
 
     const response = new Response(method, value, id);
     this.stream.write(response.serialize());
   }
 
-  _proxy(invokation) {
+  // forwards messages to the background script
+  _forward(invokation) {
+    const { id } = invokation;
+
+    this.background.listen(id, this._handleMessage.bind(this));
     this.background.invoke(invokation);
-    this.proxiedCallbacks.push(invokation);
   }
 
   // handles data from the inpage script
@@ -46,20 +46,21 @@ export default class InpageConnection {
     const invokation = Invokation.parse(data);
     const { method } = invokation;
 
-    this._isDeferred(method) ? this._proxy(invokation) : this._call(invokation);
+    this.proxiedMethods.has(method)
+      ? this._forward(invokation)
+      : this._call(invokation);
   }
 
   // handles messages from the background script
-  _handleMessage(response) {
-    this.stream.write(response.serialize());
-  }
-
-  on(method, callback) {
-    this.methodCallbacks.push(method, callback);
-    return this;
+  _handleMessage(msg) {
+    this.stream.write(msg.serialize());
   }
 
   proxy(method) {
-    this.proxy.add(method);
+    this.proxiedMethods.add(method);
+  }
+
+  on(method, callback) {
+    this.callbacks[method] = callback;
   }
 }
