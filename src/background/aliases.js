@@ -6,6 +6,6 @@ const aliases = {
   ...StartupAliases,
   ...KiltAliases,
   ...DataAliases,
-}
+};
 
 export default aliases;

@@ -6,5 +6,5 @@ ReactDOM.render(
   <React.StrictMode>
     <Options />
   </React.StrictMode>,
-  document.getElementById("options")
+  document.getElementById("options"),
 );

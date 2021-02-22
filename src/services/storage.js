@@ -1,11 +1,11 @@
 /* global chrome */
 
 class Storage {
-  constructor () {
+  constructor() {
     this.instance = undefined;
   }
 
-  static getInstance () {
+  static getInstance() {
     if (this.instance === undefined) {
       this.instance = new Storage();
     }
@@ -13,7 +13,7 @@ class Storage {
     return this.instance;
   }
 
-  hasItem (key) {
+  hasItem(key) {
     return new Promise((resolve, reject) => {
       chrome.storage.sync.get([key], (result) => {
         if (chrome.runtime.lastError) {
@@ -25,7 +25,7 @@ class Storage {
     });
   }
 
-  getItem (key, ifNull = undefined) {
+  getItem(key, ifNull = undefined) {
     return new Promise((resolve, reject) => {
       chrome.storage.sync.get([key], (result) => {
         if (chrome.runtime.lastError) {
@@ -37,7 +37,7 @@ class Storage {
     });
   }
 
-  setItem (key, value) {
+  setItem(key, value) {
     return new Promise((resolve, reject) => {
       chrome.storage.sync.set({ [key]: value }, () => {
         if (chrome.runtime.lastError) {
@@ -49,7 +49,7 @@ class Storage {
     });
   }
 
-  removeItem (key) {
+  removeItem(key) {
     return new Promise((resolve, reject) => {
       chrome.storage.sync.remove([key], () => {
         if (chrome.runtime.lastError) {
@@ -61,11 +61,11 @@ class Storage {
     });
   }
 
-  clear () {
+  clear() {
     return new Promise((resolve, reject) => {
       chrome.storage.sync.clear(() => {
         if (chrome.runtime.lastError) {
-          reject(new Error('Storage: could not clear'));
+          reject(new Error("Storage: could not clear"));
         }
 
         resolve();

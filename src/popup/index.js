@@ -31,6 +31,4 @@ function Popup() {
   );
 }
 
-ReactDOM.render(
-  <Popup />
-, document.getElementById("popup"));
+ReactDOM.render(<Popup />, document.getElementById("popup"));

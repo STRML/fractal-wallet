@@ -8,12 +8,7 @@ const rootReducer = combineReducers({
 });
 
 const store = (alias) => {
-  return createStore(rootReducer,
-    applyMiddleware(
-      alias,
-      thunk,
-    )
-  );
-}
+  return createStore(rootReducer, applyMiddleware(alias, thunk));
+};
 
 export default store;
