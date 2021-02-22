@@ -3,7 +3,9 @@ import DataEntry from "./DataEntry";
 
 export const addDataEntry = ({ payload: { key, value, type } }) => {
   return async (dispatch, getState) => {
-    const { app: { data } } = getState();
+    const {
+      app: { data },
+    } = getState();
 
     // create entry instance
     const entry = new DataEntry(key, value, type);
@@ -21,7 +23,9 @@ export const addDataEntry = ({ payload: { key, value, type } }) => {
 
 export const removeDataEntry = ({ payload: id }) => {
   return async (dispatch, getState) => {
-    const { app: { data } } = getState();
+    const {
+      app: { data },
+    } = getState();
 
     // remove entry
     data.removeById(id);

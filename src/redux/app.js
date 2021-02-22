@@ -1,5 +1,6 @@
 import mirrorCreator from "mirror-creator";
 import { createActions, handleActions } from "redux-actions";
+import DataCollection from "@background/Data/DataCollection";
 
 const types = mirrorCreator([
   "ADD_DATA_ENTRY",
@@ -16,12 +17,12 @@ export const creators = createActions(
   types.GENERATE_IDENTITY,
   types.STARTUP,
   types.SET_MNEMONIC,
-  types.SET_DATA,
+  types.SET_DATA
 );
 
 export const initialState = {
   mnemonic: "",
-  data: [],
+  data: new DataCollection(),
 };
 
 export const reducer = handleActions(
@@ -35,9 +36,9 @@ export const reducer = handleActions(
       Object.freeze({
         ...state,
         data,
-      })
+      }),
   },
-  initialState,
+  initialState
 );
 
 export const appTypes = types;

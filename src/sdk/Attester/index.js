@@ -3,8 +3,8 @@ import ExtensionConnection from "@sdk/Connection/ExtensionConnection";
 const stream = new ExtensionConnection();
 
 const verifyConnection = () => stream.invoke("verifyConnection");
-const request = (field) => stream.invoke("request", [field]);
+const unverifiedData = () => stream.invoke("unverifiedData");
 
-const Attester = { verifyConnection, request };
+const Attester = { verifyConnection, unverifiedData };
 
 export default Attester;
