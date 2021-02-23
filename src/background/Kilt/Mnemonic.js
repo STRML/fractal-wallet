@@ -1,21 +1,29 @@
 import StorageService from "@services/storage";
+import KiltService from "@services/kilt";
 
-export default class Mnemonic extends String {
-  serialize() {
-    return this.toString();
+export default class Mnemonic {
+  constructor(mnemonic, identity) {
+    this.mnemonic = mnemonic;
+    this.identity = identity;
   }
 
-  static parse(str) {
-    return new Mnemonic(str);
+  serialize() {
+    return this.mnemonic.toString();
+  }
+
+  static async parse(str) {
+    const identity = await KiltService.buildIdentityFromMnemonic(str);
+
+    return new Mnemonic(str, identity);
   }
 
   async store() {
-    await StorageService.setItem("mnemonic", this.toString());
+    await StorageService.setItem("mnemonic", this.mnemonic.toString());
   }
 
   static async restore() {
     const mnemonic = await StorageService.getItem("mnemonic", "");
 
-    return new Mnemonic(mnemonic);
+    return await Mnemonic.parse(mnemonic);
   }
 }

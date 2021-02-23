@@ -1,10 +1,10 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 
-import { reducer as appReducer } from "@redux/app";
+import { reducer as kiltReducer } from "@redux/kilt";
 
 const rootReducer = combineReducers({
-  app: appReducer,
+  kilt: kiltReducer,
 });
 
 const store = (alias) => {

@@ -2,12 +2,13 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { getMnemonic } from "@redux/selectors";
+import { getMnemonic, getBalance } from "@redux/selectors";
 
 import "@popup/styles.css";
 
 function Home() {
   const mnemonic = useSelector(getMnemonic);
+  const balance = useSelector(getBalance);
 
   return (
     <div className="Popup">
@@ -16,6 +17,9 @@ function Home() {
         <div>
           <p><strong>Mnemonic</strong></p>
           <p>{mnemonic}</p>
+          <br />
+          <p><strong>Balance</strong></p>
+          <p>{balance}</p>
         </div>
         <br /><br />
         <Link to="/data">Data</Link>

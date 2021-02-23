@@ -1,17 +1,70 @@
-import Kilt from "@kiltprotocol/sdk-js";
+import Kilt, { Identity, Balance } from "@kiltprotocol/sdk-js";
 
-async function generateIdentity() {
-  const mnemonic = Kilt.Identity.generateMnemonic();
-  const identity = await Kilt.Identity.buildFromMnemonic(mnemonic);
+const DEFAULT_NODE_URL = "wss://full-nodes.kilt.io/";
 
-  return {
-    mnemonic,
-    identity,
-  };
+class KiltProtocol {
+  constructor() {
+    this.host = undefined;
+    this.instance = undefined;
+
+    this.connected = false;
+    this.listening = false;
+  }
+
+  static getInstance() {
+    if (this.instance === undefined) {
+      this.instance = new KiltProtocol();
+    }
+
+    return this.instance;
+  }
+
+  async connect(host = DEFAULT_NODE_URL) {
+    this.host = host;
+    if (this.connected) {
+      await this.disconnect();
+    }
+
+    await Kilt.connect(this.host);
+    this.connected = true;
+  }
+
+  async disconnect() {
+    if (this.connected) {
+      await Kilt.disconnect(this.host);
+      this.connected = false;
+    }
+  }
+
+  async generateIdentity() {
+    const mnemonic = Identity.generateMnemonic();
+    const identity = await this.buildIdentityFromMnemonic(mnemonic);
+
+    return {
+      mnemonic,
+      identity,
+    };
+  }
+
+  async buildIdentityFromMnemonic(mnemonic) {
+    const identity = await Identity.buildFromMnemonic(mnemonic);
+
+    return identity;
+  }
+
+  async getBalance(identity) {
+    const balance = await Balance.getBalance(identity.address);
+
+    return balance;
+  }
+
+  async registerBalanceListener(identity, listener) {
+    if (!this.listening) {
+      await Balance.listenToBalanceChanges(identity.address, listener);
+    }
+  }
 }
 
-const service = {
-  generateIdentity,
-};
+const kilt = KiltProtocol.getInstance();
 
-export default service;
+export default kilt;

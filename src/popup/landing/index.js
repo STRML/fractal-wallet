@@ -4,7 +4,7 @@ import {
 } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-import appActions from "@redux/app";
+import kiltActions from "@redux/kilt";
 
 import "@popup/styles.css";
 
@@ -16,7 +16,7 @@ function Landing() {
 
   let { from } = location.state || { from: { pathname: "/" } };
   const handleClick = async () => {
-    dispatch(appActions.generateIdentity())
+    dispatch(kiltActions.generateIdentity())
     .then(() => history.replace(from));
   };
 
