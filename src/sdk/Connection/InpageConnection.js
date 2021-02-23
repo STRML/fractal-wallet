@@ -58,9 +58,11 @@ export default class InpageConnection {
 
   proxy(method) {
     this.proxiedMethods.add(method);
+    return this;
   }
 
   on(method, callback) {
     this.callbacks[method] = callback;
+    return this;
   }
 }

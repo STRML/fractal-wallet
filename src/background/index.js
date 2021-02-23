@@ -12,14 +12,10 @@ wrapStore(store);
 
 store.dispatch(appActions.startup());
 
-contentScript.on("unverifiedData", () => {
+contentScript.on("hasFields", (fields) => {
   const {
-    app: { data },
+    data: { data },
   } = store.getState();
 
-  const response = data
-    .getUnvalidated()
-    .reduce((memo, { key, value }) => ({ ...memo, [key]: value }), {});
-
-  return response;
+  return data.hasFields(fields);
 });

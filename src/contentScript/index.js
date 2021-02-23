@@ -11,9 +11,9 @@ injectScript(sdk);
 const background = new BackgroundConnection();
 const inpage = new InpageConnection(background);
 
-inpage.proxy("unverifiedData");
-
-inpage.on("verifyConnection", () => {
-  const { version } = chrome.runtime.getManifest();
-  return version;
-});
+inpage
+  .on("verifyConnection", () => {
+    const { version } = chrome.runtime.getManifest();
+    return version;
+  })
+  .proxy("hasFields");

@@ -15,8 +15,12 @@ export default class DataCollection extends Array {
     }
   }
 
-  getUnvalidated() {
-    return this.filter((elem) => !elem.validated);
+  hasField(field) {
+    return !!this.find(({ key }) => key === field);
+  }
+
+  hasFields(fields) {
+    return fields.every(this.hasField.bind(this));
   }
 
   static parse(str) {

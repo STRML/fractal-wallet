@@ -27,7 +27,7 @@ export default class ExtensionConnection {
     success ? resolve(value) : reject(value);
   }
 
-  invoke(method, args = []) {
+  invoke(method, ...args) {
     return new Promise((resolve, reject) => {
       const message = new Invokation(method, args);
       const { id } = message;
