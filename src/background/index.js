@@ -17,7 +17,9 @@ contentScript.on("unverifiedData", () => {
     app: { data },
   } = store.getState();
 
-  const response = data.getUnvalidated().reduce((memo, { key, value }) => ({...memo, [key]: value}), {});
+  const response = data
+    .getUnvalidated()
+    .reduce((memo, { key, value }) => ({ ...memo, [key]: value }), {});
 
   return response;
 });

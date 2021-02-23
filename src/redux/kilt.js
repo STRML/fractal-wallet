@@ -31,7 +31,7 @@ export const reducer = handleActions(
       Object.freeze({
         ...state,
         balance,
-      })
+      }),
   },
   initialState,
 );
