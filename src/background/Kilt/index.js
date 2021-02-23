@@ -1,5 +1,4 @@
 import kiltActions, { kiltTypes } from "@redux/kilt";
-import { getIdentity } from "@redux/selectors";
 
 import Mnemonic from "./Mnemonic";
 
@@ -20,21 +19,8 @@ const generateIdentity = () => {
   };
 };
 
-const getBalance = () => {
-  return async (dispatch, getState) => {
-    const identity = getIdentity(getState());
-
-    // get balance
-    const balance = KiltService.getBalance(identity);
-
-    // update redux store
-    dispatch(kiltActions.setBalance(balance));
-  };
-};
-
 const Aliases = {
   [kiltTypes.GENERATE_IDENTITY]: generateIdentity,
-  [kiltTypes.GET_BALANCE]: getBalance,
 };
 
 export default Aliases;

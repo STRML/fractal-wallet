@@ -6,8 +6,8 @@ export const isSignedIn = createSelector(
 );
 
 export const getData = createSelector(
-  (state) => state.app,
-  (app) => app.data,
+  (state) => state.data,
+  (data) => data.data,
 );
 
 export const getMnemonic = createSelector(

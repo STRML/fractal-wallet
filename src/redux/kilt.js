@@ -5,14 +5,12 @@ const types = mirrorCreator([
   "SET_MNEMONIC",
   "SET_BALANCE",
   "GENERATE_IDENTITY",
-  "GET_BALANCE",
 ]);
 
 export const creators = createActions(
   types.SET_MNEMONIC,
   types.SET_BALANCE,
   types.GENERATE_IDENTITY,
-  types.GET_BALANCE,
 );
 
 export const initialState = {

@@ -1,5 +1,6 @@
-import appActions, { appTypes } from "@redux/app";
+import { appTypes } from "@redux/app";
 import kiltActions from "@redux/kilt";
+import dataActions from "@redux/data";
 
 import KiltService from "@services/kilt";
 
@@ -21,12 +22,12 @@ export const startup = () => {
 
     await KiltService.registerBalanceListener(
       mnemonic.identity,
-      onChangeBalance
+      onChangeBalance,
     );
 
     // update redux store
     dispatch(kiltActions.setMnemonic(mnemonic));
-    dispatch(appActions.setData(data));
+    dispatch(dataActions.setData(data));
   };
 };
 

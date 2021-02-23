@@ -1,14 +1,14 @@
-import appActions, { appTypes } from "@redux/app";
+import dataActions, { dataTypes } from "@redux/data";
+import { getData } from "@redux/selectors";
+
 import DataEntry from "./DataEntry";
 
-export const addDataEntry = ({ payload: { key, value, type } }) => {
+export const addDataEntry = ({ payload: { key, value } }) => {
   return async (dispatch, getState) => {
-    const {
-      app: { data },
-    } = getState();
+    const data = getData(getState());
 
     // create entry instance
-    const entry = new DataEntry(key, value, type);
+    const entry = new DataEntry(key, value);
 
     // append entry
     data.push(entry);
@@ -17,15 +17,13 @@ export const addDataEntry = ({ payload: { key, value, type } }) => {
     await data.store();
 
     // update redux store
-    dispatch(appActions.setData(data));
+    dispatch(dataActions.setData(data));
   };
 };
 
 export const removeDataEntry = ({ payload: id }) => {
   return async (dispatch, getState) => {
-    const {
-      app: { data },
-    } = getState();
+    const data = getData(getState());
 
     // remove entry
     data.removeById(id);
@@ -34,13 +32,13 @@ export const removeDataEntry = ({ payload: id }) => {
     await data.store();
 
     // update redux store
-    dispatch(appActions.setData(data));
+    dispatch(dataActions.setData(data));
   };
 };
 
 const Aliases = {
-  [appTypes.ADD_DATA_ENTRY]: addDataEntry,
-  [appTypes.REMOVE_DATA_ENTRY]: removeDataEntry,
+  [dataTypes.ADD_DATA_ENTRY]: addDataEntry,
+  [dataTypes.REMOVE_DATA_ENTRY]: removeDataEntry,
 };
 
 export default Aliases;

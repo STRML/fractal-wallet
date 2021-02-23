@@ -1,7 +1,4 @@
-import {
-  useHistory,
-  useLocation,
-} from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import kiltActions from "@redux/kilt";
@@ -9,28 +6,25 @@ import kiltActions from "@redux/kilt";
 import "@popup/styles.css";
 
 function Landing() {
-  let history = useHistory();
-  let location = useLocation();
+  const history = useHistory();
+  const location = useLocation();
 
   const dispatch = useDispatch();
 
-  let { from } = location.state || { from: { pathname: "/" } };
+  const { from } = location.state || { from: { pathname: "/" } };
   const handleClick = async () => {
-    dispatch(kiltActions.generateIdentity())
-    .then(() => history.replace(from));
+    dispatch(kiltActions.generateIdentity()).then(() => history.replace(from));
   };
 
   return (
     <div className="Popup">
-      <h2><center>Welcome</center></h2>
+      <h2>
+        <center>Welcome</center>
+      </h2>
       <div>
-        <p>
-          Press the below button to setup a kilt identity.
-        </p>
+        <p>Press the below button to setup a kilt identity.</p>
       </div>
-      <button onClick={handleClick}>
-        Setup
-      </button>
+      <button onClick={handleClick}>Setup</button>
     </div>
   );
 }

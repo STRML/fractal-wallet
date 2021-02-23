@@ -1,67 +1,83 @@
 import { useHistory } from "react-router-dom";
-import appActions from "@redux/app";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
-import DataTypes from '@background/Data/DataTypes';
+import dataActions from "@redux/data";
+
+import DataKeys from "@background/Data/DataKeys";
 
 import "@popup/styles.css";
 
 function DataCreate() {
-  let history = useHistory();
+  const history = useHistory();
 
   const dispatch = useDispatch();
 
-  const [key, setKey] = useState("");
+  const keys = Object.values(DataKeys);
+  const [key, setKey] = useState(DataKeys.EMAIL.key);
+  const [format, setFormat] = useState(DataKeys.EMAIL.format);
   const [value, setValue] = useState("");
-  const [type, setType] = useState(DataTypes.STRING);
+
+  const isDisabled = value.length === 0;
+
+  const onChangeKey = (event) => {
+    const newKey =
+      keys[
+        keys.findIndex(
+          ({ key: searchedKey }) => searchedKey === event.target.value,
+        )
+      ];
+
+    if (newKey) {
+      setKey(newKey.key);
+      setFormat(newKey.format);
+    }
+  };
 
   const addEntry = (event) => {
     event.preventDefault();
-    if (key && value && type) {
-      dispatch(appActions.addDataEntry({ key, value, type }));
 
-      setKey("");
-      setValue("");
-      setType(DataTypes.STRING);
-    }
+    dispatch(dataActions.addDataEntry({ key, value }));
+
+    setKey(DataKeys.EMAIL.key);
+    setFormat(DataKeys.EMAIL.format);
+    setValue("");
 
     // Navigate back
     history.push("data");
-  }
+  };
 
   return (
     <div className="Popup">
       <Link to="/data">Back</Link>
       <hr />
-      <h2><strong>Create new data entry</strong></h2>
-      <form onSubmit={addEntry}>
-        <p><strong>New entry</strong></p>
-        <input
-          name="key"
-          placeholder="key"
-          type="text"
-          value={key}
-          onChange={event => setKey(event.target.value)}
-        /><br />
-        <input
-          name="value"
-          placeholder="value"
-          type="text"
-          value={value}
-          onChange={event => setValue(event.target.value)}
-        /><br />
-        <select
-          name="type"
-          value={type}
-          onChange={event => setType(event.target.value)}
-        >
-          {Object.values(DataTypes).map(type => <option key={type} value={type}>{type}</option>)}
+      <h2>
+        <strong>Create new data entry</strong>
+      </h2>
+      <div>
+        <p>
+          <strong>New entry</strong>
+        </p>
+        <select value={key} onChange={onChangeKey}>
+          {keys.map(({ key, name }) => (
+            <option key={key}>{key}</option>
+          ))}
         </select>
         <br />
-        <input type="submit" value="Create" />
-      </form>
+        <input
+          name="value"
+          placeholder={format}
+          type={format}
+          value={value}
+          onChange={(event) => setValue(event.target.value)}
+        />
+        <br />
+        <br />
+        <button disabled={isDisabled} onClick={addEntry}>
+          Create
+        </button>
+      </div>
     </div>
   );
 }

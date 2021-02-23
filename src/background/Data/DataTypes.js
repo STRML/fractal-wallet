@@ -1,7 +1,7 @@
 const types = {
   STRING: "string",
   NUMBER: "number",
-  OBJECT: "object"
-}
+  BOOLEAN: "boolean",
+};
 
 export default types;
