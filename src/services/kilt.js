@@ -1,7 +1,5 @@
 import Kilt, { Identity, Balance } from "@kiltprotocol/sdk-js";
 
-const DEFAULT_NODE_URL = "wss://full-nodes.kilt.io/";
-
 class KiltProtocol {
   constructor() {
     this.host = undefined;
@@ -19,7 +17,7 @@ class KiltProtocol {
     return this.instance;
   }
 
-  async connect(host = DEFAULT_NODE_URL) {
+  async connect(host = process.env.REACT_APP_BLOCKCHAIN_HOST) {
     this.host = host;
     if (this.connected) {
       await this.disconnect();

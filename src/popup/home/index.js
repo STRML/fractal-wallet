@@ -12,17 +12,27 @@ function Home() {
 
   return (
     <div className="Popup">
-      <h2><center>Home</center></h2>
+      <h2>
+        <center>Home</center>
+      </h2>
       <div>
         <div>
-          <p><strong>Mnemonic</strong></p>
+          <p>
+            <strong>Mnemonic</strong>
+          </p>
           <p>{mnemonic}</p>
           <br />
-          <p><strong>Balance</strong></p>
+          <p>
+            <strong>Balance</strong>
+          </p>
           <p>{balance}</p>
         </div>
-        <br /><br />
+        <br />
+        <br />
         <Link to="/data">Data</Link>
+        <br />
+        <br />
+        <Link to="/credentials">Credentials</Link>
       </div>
     </div>
   );

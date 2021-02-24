@@ -40,7 +40,7 @@ function DataHome() {
                   <td>{elem.value}</td>
                   <td>{elem.validated ? "✓" : "?"}</td>
                   <td>
-                    <button onClick={() => removeEntry(elem.id)}>✗</button>
+                    <button onClick={() => removeEntry(elem.id)}>Delete</button>
                   </td>
                 </tr>
               ))}
@@ -48,6 +48,8 @@ function DataHome() {
           </table>
         </div>
       )}
+      <br />
+      <br />
 
       <Link to="/data/create">Create</Link>
     </div>

@@ -1,26 +1,27 @@
+import BaseCollection from "@background/BaseCollection";
+
 import DataEntry from "./DataEntry";
 
 import StorageService from "@services/storage";
 
-export default class DataCollection extends Array {
-  serialize() {
-    return JSON.stringify(this.map((element) => element.serialize()));
-  }
-
-  removeById(id) {
-    const index = this.findIndex((element) => element.id === id);
-
-    if (index >= 0) {
-      this.splice(index, 1);
-    }
-  }
-
+export default class DataCollection extends BaseCollection {
   hasField(field) {
     return !!this.find(({ key }) => key === field);
   }
 
   hasFields(fields) {
     return fields.every(this.hasField.bind(this));
+  }
+
+  getField(field) {
+    return this.find(({ key }) => key === field);
+  }
+
+  getFields(fields) {
+    return fields.reduce(
+      (memo, elem) => ({ ...memo, [elem]: this.getField(elem) }),
+      {},
+    );
   }
 
   static parse(str) {
