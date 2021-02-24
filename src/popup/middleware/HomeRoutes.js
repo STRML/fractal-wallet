@@ -1,14 +1,18 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import {
-  Redirect,
-  Route,
-} from "react-router-dom";
+import { Redirect, Route } from "react-router-dom";
 
-import { isSignedIn } from "@redux/selectors";
+import Loading from "@popup/loading";
+
+import { isSignedIn, isLaunched } from "@redux/selectors";
 
 function HomeRoutes({ children, ...rest }) {
   const signIn = useSelector(isSignedIn);
+  const launched = useSelector(isLaunched);
+
+  if (!launched) {
+    return <Loading />;
+  }
 
   return (
     <Route
@@ -20,7 +24,7 @@ function HomeRoutes({ children, ...rest }) {
           <Redirect
             to={{
               pathname: "/landing",
-              state: { from: location }
+              state: { from: location },
             }}
           />
         )

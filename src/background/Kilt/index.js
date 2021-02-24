@@ -18,6 +18,15 @@ const generateIdentity = () => {
     // store new mnemonic
     await instance.store();
 
+    // register balance listener
+    const onChangeBalance = (_account, balance) =>
+      dispatch(kiltActions.setBalance(balance.toString()));
+
+    await KiltService.registerBalanceListener(
+      instance.identity,
+      onChangeBalance,
+    );
+
     // update redux store
     dispatch(kiltActions.setMnemonic(instance));
   };

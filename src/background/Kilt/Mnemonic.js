@@ -12,7 +12,9 @@ export default class Mnemonic {
   }
 
   static async parse(str) {
-    const identity = await KiltService.buildIdentityFromMnemonic(str);
+    let identity = null;
+
+    if (str) identity = await KiltService.buildIdentityFromMnemonic(str);
 
     return new Mnemonic(str, identity);
   }

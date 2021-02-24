@@ -1,5 +1,10 @@
 import { createSelector } from "reselect";
 
+export const isLaunched = createSelector(
+  (state) => state.app,
+  (app) => app.launched,
+);
+
 export const isSignedIn = createSelector(
   (state) => state.kilt,
   (kilt) => kilt.mnemonic.mnemonic.length > 0,

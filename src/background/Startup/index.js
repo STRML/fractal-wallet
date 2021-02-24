@@ -1,6 +1,7 @@
 import { appTypes } from "@redux/app";
 import kiltActions from "@redux/kilt";
 import dataActions from "@redux/data";
+import appActions from "@redux/app";
 
 import KiltService from "@services/kilt";
 
@@ -19,18 +20,23 @@ export const startup = () => {
     const credentials = await CredentialsCollection.restore();
 
     // register balance listener
-    const onChangeBalance = (_account, balance) =>
-      dispatch(kiltActions.setBalance(balance.toString()));
+    if (mnemonic.mnemonic.length > 0) {
+      const onChangeBalance = (_account, balance) =>
+        dispatch(kiltActions.setBalance(balance.toString()));
 
-    await KiltService.registerBalanceListener(
-      mnemonic.identity,
-      onChangeBalance,
-    );
+      await KiltService.registerBalanceListener(
+        mnemonic.identity,
+        onChangeBalance,
+      );
+    }
 
     // update redux store
     dispatch(kiltActions.setMnemonic(mnemonic));
     dispatch(dataActions.setData(data));
     dispatch(kiltActions.setCredentials(credentials));
+
+    // set extension as launched
+    dispatch(appActions.setLaunched(true));
   };
 };
 
