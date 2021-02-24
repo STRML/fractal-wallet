@@ -32,11 +32,11 @@ const appPackageJson = require(paths.appPackageJson);
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== "false";
 
 const reactRefreshOverlayEntry = require.resolve(
-  "react-dev-utils/refreshOverlayInterop"
+  "react-dev-utils/refreshOverlayInterop",
 );
 
 const imageInlineSizeLimit = parseInt(
-  process.env.IMAGE_INLINE_SIZE_LIMIT || "10000"
+  process.env.IMAGE_INLINE_SIZE_LIMIT || "10000",
 );
 
 // Check if TypeScript is setup
@@ -130,7 +130,7 @@ module.exports = function (webpackEnv) {
           options: {
             sourceMap: true,
           },
-        }
+        },
       );
     }
     return loaders;
@@ -266,7 +266,7 @@ module.exports = function (webpackEnv) {
       // if there are any conflicts. This matches Node resolution mechanism.
       // https://github.com/facebook/create-react-app/issues/253
       modules: ["node_modules", paths.appNodeModules].concat(
-        modules.additionalModulePaths || []
+        modules.additionalModulePaths || [],
       ),
       // These are the reasonable defaults supported by the Node ecosystem.
       // We also include JSX as a common component filename extension to support
@@ -287,15 +287,19 @@ module.exports = function (webpackEnv) {
           "scheduler/tracing": "scheduler/tracing-profiling",
         }),
         // Project aliases
-        "@src": path.resolve(__dirname, '../src/'),
-        "@assets": path.resolve(__dirname, '../src/assets/'),
-        "@background": path.resolve(__dirname, '../src/background/'),
-        "@contentScript": path.resolve(__dirname, '../src/contentScript/'),
-        "@options": path.resolve(__dirname, '../src/options/'),
-        "@popup": path.resolve(__dirname, '../src/popup/'),
-        "@redux": path.resolve(__dirname, '../src/redux/'),
-        "@sdk": path.resolve(__dirname, '../src/sdk/'),
-        "@services": path.resolve(__dirname, '../src/services/'),
+        "@src": path.resolve(__dirname, "../src/"),
+        "@assets": path.resolve(__dirname, "../src/assets/"),
+        "@models": path.resolve(__dirname, "../src/models/"),
+        "@background": path.resolve(__dirname, "../src/scripts/background/"),
+        "@contentScript": path.resolve(
+          __dirname,
+          "../src/scripts/contentScript/",
+        ),
+        "@sdk": path.resolve(__dirname, "../src/scripts/sdk/"),
+        "@options": path.resolve(__dirname, "../src/options/"),
+        "@popup": path.resolve(__dirname, "../src/popup/"),
+        "@redux": path.resolve(__dirname, "../src/redux/"),
+        "@services": path.resolve(__dirname, "../src/services/"),
         ...(modules.webpackAliases || {}),
       },
       plugins: [
@@ -360,7 +364,7 @@ module.exports = function (webpackEnv) {
               loader: require.resolve("babel-loader"),
               options: {
                 customize: require.resolve(
-                  "babel-preset-react-app/webpack-overrides"
+                  "babel-preset-react-app/webpack-overrides",
                 ),
                 presets: [
                   [
@@ -469,7 +473,7 @@ module.exports = function (webpackEnv) {
                     ? shouldUseSourceMap
                     : isEnvDevelopment,
                 },
-                "sass-loader"
+                "sass-loader",
               ),
               // Don't consider CSS imports dead code even if the
               // containing package claims to have no side effects.
@@ -491,7 +495,7 @@ module.exports = function (webpackEnv) {
                     getLocalIdent: getCSSModuleLocalIdent,
                   },
                 },
-                "sass-loader"
+                "sass-loader",
               ),
             },
             // "file" loader makes sure those assets get served by WebpackDevServer.
@@ -542,8 +546,8 @@ module.exports = function (webpackEnv) {
                   minifyURLs: true,
                 },
               }
-            : undefined
-        )
+            : undefined,
+        ),
       ),
       new HtmlWebpackPlugin(
         Object.assign(
@@ -569,8 +573,8 @@ module.exports = function (webpackEnv) {
                   minifyURLs: true,
                 },
               }
-            : undefined
-        )
+            : undefined,
+        ),
       ),
       // Makes some environment variables available in index.html.
       // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
@@ -628,7 +632,7 @@ module.exports = function (webpackEnv) {
 
               return files;
             },
-            []
+            [],
           );
 
           return {
@@ -696,7 +700,7 @@ module.exports = function (webpackEnv) {
         cache: true,
         cacheLocation: path.resolve(
           paths.appNodeModules,
-          ".cache/.eslintcache"
+          ".cache/.eslintcache",
         ),
         // ESLint class options
         cwd: paths.appPath,

@@ -1,7 +1,7 @@
 import dataActions, { dataTypes } from "@redux/data";
 import { getData } from "@redux/selectors";
 
-import DataEntry from "./DataEntry";
+import DataEntry from "@models/Data/DataEntry";
 
 export const addDataEntry = ({ payload: { key, value } }) => {
   return async (dispatch, getState) => {

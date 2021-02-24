@@ -1,4 +1,4 @@
-export default class BaseCollection extends Array {
+export default class Collection extends Array {
   serialize() {
     return JSON.stringify(this.map((element) => element.serialize()));
   }

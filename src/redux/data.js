@@ -1,7 +1,7 @@
 import mirrorCreator from "mirror-creator";
 import { createActions, handleActions } from "redux-actions";
 
-import DataCollection from "@background/Data/DataCollection";
+import DataCollection from "@models/Data/DataCollection";
 
 const types = mirrorCreator([
   "ADD_DATA_ENTRY",

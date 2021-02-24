@@ -5,9 +5,9 @@ import appActions from "@redux/app";
 
 import KiltService from "@services/kilt";
 
-import Mnemonic from "@background/Kilt/Mnemonic";
-import DataCollection from "@background/Data/DataCollection";
-import CredentialsCollection from "@background/Kilt/CredentialsCollection";
+import Mnemonic from "@models/Mnemonic";
+import DataCollection from "@models/Data/DataCollection";
+import CredentialsCollection from "@models/Credential/CredentialsCollection";
 
 export const startup = () => {
   return async (dispatch) => {

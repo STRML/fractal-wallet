@@ -1,7 +1,7 @@
 /* global chrome */
 
-import InpageConnection from "@sdk/Connection/InpageConnection";
-import BackgroundConnection from "@sdk/Connection/BackgroundConnection";
+import InpageConnection from "@models//Connection/InpageConnection";
+import BackgroundConnection from "@models//Connection/BackgroundConnection";
 
 import { injectScript } from "./injector";
 

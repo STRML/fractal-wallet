@@ -3,13 +3,11 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import HomeRoutes from "@popup/middleware/HomeRoutes";
 
-import CredentialsIndex from "@popup/credentials";
-
-import DataIndex from "@popup/data";
-import DataCreate from "@popup/data/create";
-
-import Home from "@popup/home";
-import Landing from "@popup/landing";
+import CredentialsIndex from "@popup/views/credentials";
+import DataIndex from "@popup/views/data";
+import DataCreate from "@popup/views/data/create";
+import Home from "@popup/views/home";
+import Landing from "@popup/views/landing";
 
 function App() {
   return (

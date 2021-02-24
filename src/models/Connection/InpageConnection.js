@@ -1,7 +1,7 @@
 import LocalMessageDuplexStream from "post-message-stream";
 
-import Invokation from "@sdk/Message/Invokation";
-import Response from "@sdk/Message/Response";
+import Invokation from "@models/Message/Invokation";
+import Response from "@models/Message/Response";
 
 import { inpage } from "./params";
 

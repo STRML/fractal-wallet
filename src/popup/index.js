@@ -4,7 +4,7 @@ import { Store } from "webext-redux";
 import { Provider as ReduxProvider } from "react-redux";
 
 import App from "@popup/app";
-import Loading from "@popup/loading";
+import Loading from "@popup/views/loading";
 
 const store = new Store();
 

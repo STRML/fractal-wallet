@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Redirect, Route } from "react-router-dom";
 
-import Loading from "@popup/loading";
+import Loading from "@popup/views/loading";
 
 import { isSignedIn, isLaunched } from "@redux/selectors";
 

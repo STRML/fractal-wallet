@@ -1,4 +1,4 @@
-import DataTypes from "./DataTypes";
+import DataTypes from "@models/Data/DataTypes";
 
 const keys = {
   FIRST_NAME: {

@@ -1,4 +1,4 @@
-import ExtensionConnection from "@sdk/Connection/ExtensionConnection";
+import ExtensionConnection from "@models/Connection/ExtensionConnection";
 
 const stream = new ExtensionConnection();
 

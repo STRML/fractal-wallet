@@ -1,6 +1,6 @@
 /* global chrome */
 
-import Response from "@sdk/Message/Response";
+import Response from "@models/Message/Response";
 
 export default class ContentScriptConnection {
   constructor() {

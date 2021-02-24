@@ -1,7 +1,7 @@
 import mirrorCreator from "mirror-creator";
 import { createActions, handleActions } from "redux-actions";
 
-import CredentialsCollection from "@background/Kilt/CredentialsCollection";
+import CredentialsCollection from "@models/Credential/CredentialsCollection";
 
 const types = mirrorCreator([
   "ADD_CREDENTIAL",

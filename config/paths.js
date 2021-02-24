@@ -1,5 +1,3 @@
-
-
 const path = require("path");
 const fs = require("fs");
 
@@ -25,7 +23,7 @@ const moduleFileExtensions = [
 // Resolve file paths in the same order as webpack
 const resolveModule = (resolveFn, filePath) => {
   const extension = moduleFileExtensions.find((extension) =>
-    fs.existsSync(resolveFn(`${filePath}.${extension}`))
+    fs.existsSync(resolveFn(`${filePath}.${extension}`)),
   );
 
   if (extension) {
@@ -46,9 +44,12 @@ module.exports = {
   appOptionsHtml: resolveApp("public/options.html"),
   appPopupHtml: resolveApp("public/popup.html"),
   appIndexJs: resolveModule(resolveApp, "src/index"),
-  appBackgroundJs: resolveModule(resolveApp, "src/background/index"),
-  appContentScriptJs: resolveModule(resolveApp, "src/contentScript/index"),
-  appSDKJs: resolveModule(resolveApp, "src/sdk/index"),
+  appBackgroundJs: resolveModule(resolveApp, "src/scripts/background/index"),
+  appContentScriptJs: resolveModule(
+    resolveApp,
+    "src/scripts/contentScript/index",
+  ),
+  appSDKJs: resolveModule(resolveApp, "src/scripts/sdk/index"),
   appOptionsJs: resolveModule(resolveApp, "src/options/index"),
   appPackageJson: resolveApp("package.json"),
   appSrc: resolveApp("src"),

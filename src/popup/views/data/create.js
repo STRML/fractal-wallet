@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 import dataActions from "@redux/data";
 
-import DataKeys from "@background/Data/DataKeys";
+import DataKeys from "@models/Data/DataKeys";
 
 import "@popup/styles.css";
 

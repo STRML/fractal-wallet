@@ -3,8 +3,8 @@
 import kiltActions, { kiltTypes } from "@redux/kilt";
 import { getCredentials } from "@redux/selectors";
 
-import Credential from "./Credential";
-import Mnemonic from "./Mnemonic";
+import Mnemonic from "@src/models/Mnemonic";
+import Credential from "@src/models/Credential/Credential";
 
 import KiltService from "@services/kilt";
 

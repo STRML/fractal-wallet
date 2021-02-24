@@ -1,10 +1,9 @@
-import BaseCollection from "@background/BaseCollection";
-
-import Credential from "./Credential";
+import Collection from "@models/Base/Collection";
+import Credential from "@models/Credential/Credential";
 
 import StorageService from "@services/storage";
 
-export default class CredentialsCollection extends BaseCollection {
+export default class CredentialsCollection extends Collection {
   static parse(str) {
     const credentials = JSON.parse(str);
 

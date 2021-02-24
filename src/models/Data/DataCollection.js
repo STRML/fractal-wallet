@@ -1,10 +1,9 @@
-import BaseCollection from "@background/BaseCollection";
-
-import DataEntry from "./DataEntry";
+import Collection from "@models/Base/Collection";
+import DataEntry from "@models/Data/DataEntry";
 
 import StorageService from "@services/storage";
 
-export default class DataCollection extends BaseCollection {
+export default class DataCollection extends Collection {
   hasField(field) {
     return !!this.find(({ key }) => key === field);
   }

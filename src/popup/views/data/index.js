@@ -7,7 +7,7 @@ import { getData } from "@redux/selectors";
 
 import "@popup/styles.css";
 
-function DataHome() {
+function Data() {
   const dispatch = useDispatch();
 
   const data = useSelector(getData);
@@ -56,4 +56,4 @@ function DataHome() {
   );
 }
 
-export default DataHome;
+export default Data;

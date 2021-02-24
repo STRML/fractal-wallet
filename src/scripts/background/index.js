@@ -7,7 +7,7 @@ import { getData } from "@redux/selectors";
 
 import aliases from "@background/aliases";
 
-import ContentScriptConnection from "@sdk/Connection/ContentScriptConnection";
+import ContentScriptConnection from "@models/Connection/ContentScriptConnection";
 
 const contentScript = new ContentScriptConnection();
 const store = createStore(alias(aliases));
