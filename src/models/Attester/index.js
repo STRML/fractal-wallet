@@ -2,17 +2,29 @@ import ExtensionConnection from "@models/Connection/ExtensionConnection";
 
 const stream = new ExtensionConnection();
 
-const verifyConnection = () => stream.invoke("verifyConnection");
-const hasFields = (fields) => stream.invoke("hasFields", fields);
-const getFields = (fields) => stream.invoke("getFields", fields);
 const broadcastCredential = (credential) =>
   stream.invoke("broadcastCredential", credential);
 
+const getAddress = () => stream.invoke("getAddress");
+
+const getProperties = (properties) =>
+  stream.invoke("getProperties", properties);
+
+const hasProperties = (properties) =>
+  stream.invoke("hasProperties", properties);
+
+const requestAttestation = (ctype, target) =>
+  stream.invoke("requestAttestation", ctype, target);
+
+const verifyConnection = () => stream.invoke("verifyConnection");
+
 const Attester = {
-  verifyConnection,
-  hasFields,
-  getFields,
   broadcastCredential,
+  getAddress,
+  getProperties,
+  hasProperties,
+  requestAttestation,
+  verifyConnection,
 };
 
 export default Attester;

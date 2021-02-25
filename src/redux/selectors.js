@@ -35,8 +35,14 @@ export const getMnemonic = createSelector(
   (kilt) => kilt.mnemonic.mnemonic,
 );
 
+export const getAddress = createSelector(
+  (state) => state.kilt,
+  (kilt) => kilt.mnemonic.address,
+);
+
 const selectors = {
   isSignedIn,
+  getAddress,
   getBalance,
   getCredentials,
   getData,

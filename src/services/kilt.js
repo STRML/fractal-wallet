@@ -1,4 +1,10 @@
-import Kilt, { Identity, Balance } from "@kiltprotocol/sdk-js";
+import Kilt, {
+  Identity,
+  Balance,
+  Claim,
+  CType,
+  MessageBodyType,
+} from "@kiltprotocol/sdk-js";
 
 class KiltProtocol {
   constructor() {
@@ -60,6 +66,33 @@ class KiltProtocol {
     if (!this.listening) {
       await Balance.listenToBalanceChanges(identity.address, listener);
     }
+  }
+
+  async buildAttestationRequest(identity, ctypeObj, properties) {
+    const ctype = CType.fromCType(ctypeObj);
+    const claim = Claim.fromCTypeAndClaimContents(
+      ctype,
+      properties,
+      identity.address,
+    );
+
+    const { message } = await Kilt.RequestForAttestation.fromClaimAndIdentity(
+      claim,
+      identity,
+    );
+
+    return message;
+  }
+
+  async buildAttestationRequestMessage(identity, request, target) {
+    const body = {
+      content: { requestForAttestation: request },
+      type: MessageBodyType.REQUEST_ATTESTATION_FOR_CLAIM,
+    };
+
+    const message = new Kilt.Message(body, identity, target);
+
+    return message.encrypt();
   }
 }
 

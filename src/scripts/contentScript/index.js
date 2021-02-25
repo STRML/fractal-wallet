@@ -16,6 +16,8 @@ inpage
     const { version } = chrome.runtime.getManifest();
     return version;
   })
-  .proxy("hasFields")
-  .proxy("getFields")
-  .proxy("broadcastCredential");
+  .proxy("broadcastCredential")
+  .proxy("getAddress")
+  .proxy("getProperties")
+  .proxy("hasProperties")
+  .proxy("requestAttestation");

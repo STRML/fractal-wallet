@@ -4,21 +4,21 @@ import DataEntry from "@models/Data/DataEntry";
 import StorageService from "@services/storage";
 
 export default class DataCollection extends Collection {
-  hasField(field) {
-    return !!this.find(({ key }) => key === field);
+  hasProperty(property) {
+    return !!this.find(({ key }) => key === property);
   }
 
-  hasFields(fields) {
-    return fields.every(this.hasField.bind(this));
+  hasProperties(properties) {
+    return properties.every(this.hasProperty.bind(this));
   }
 
-  getField(field) {
-    return this.find(({ key }) => key === field);
+  getProperty(property) {
+    return this.find(({ key }) => key === property);
   }
 
-  getFields(fields) {
-    return fields.reduce(
-      (memo, elem) => ({ ...memo, [elem]: this.getField(elem) }),
+  getProperties(properties) {
+    return properties.reduce(
+      (memo, elem) => ({ ...memo, [elem]: this.getProperty(elem).value }),
       {},
     );
   }

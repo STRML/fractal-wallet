@@ -5,6 +5,7 @@ export default class Mnemonic {
   constructor(mnemonic, identity) {
     this.mnemonic = mnemonic;
     this.identity = identity;
+    this.address = identity?.address;
   }
 
   serialize() {
