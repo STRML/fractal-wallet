@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 
 export default class Credential {
-  constructor(id = null, attester, claimer, content, type, createAt = null) {
+  constructor(id = null, attester, claimer, content, type, createdAt = null) {
     this.id = id || uuidv4();
 
     this.attester = attester;
@@ -9,7 +9,7 @@ export default class Credential {
     this.content = content;
     this.type = type;
 
-    this.createdAt = createAt || new Date();
+    this.createdAt = createdAt || new Date();
   }
 
   serialize() {
@@ -19,7 +19,7 @@ export default class Credential {
       claimer: this.claimer,
       content: this.content,
       type: this.type,
-      date: this.createAt,
+      date: this.createdAt,
     });
   }
 

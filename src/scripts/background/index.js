@@ -8,47 +8,51 @@ import aliases from "@background/aliases";
 import KiltService from "@services/kilt";
 import ContentScriptConnection from "@models/Connection/ContentScriptConnection";
 
-const contentScript = new ContentScriptConnection();
-const store = createStore(alias(aliases));
+function init() {
+  const contentScript = new ContentScriptConnection();
+  const store = createStore(alias(aliases));
 
-wrapStore(store);
+  wrapStore(store);
 
-store.dispatch(appActions.startup());
+  store.dispatch(appActions.startup());
 
-contentScript.on("hasProperties", (properties) => {
-  const data = getData(store.getState());
+  contentScript.on("hasProperties", (properties) => {
+    const data = getData(store.getState());
 
-  return data.hasProperties(properties);
-});
+    return data.hasProperties(properties);
+  });
 
-contentScript.on("getProperties", (properties) => {
-  const data = getData(store.getState());
+  contentScript.on("getProperties", (properties) => {
+    const data = getData(store.getState());
 
-  return data.getProperties(properties);
-});
+    return data.getProperties(properties);
+  });
 
-contentScript.on("broadcastCredential", (credential) => {
-  store.dispatch(kiltActions.addCredential(credential));
-});
+  contentScript.on("broadcastCredential", (credential) => {
+    store.dispatch(kiltActions.addCredential(credential));
+  });
 
-contentScript.on("getAddress", () => {
-  return getAddress(store.getState());
-});
+  contentScript.on("getAddress", () => {
+    return getAddress(store.getState());
+  });
 
-contentScript.on("requestAttestation", async (ctype, target) => {
-  const identity = getIdentity(store.getState());
-  const data = getData(store.getState());
-  const propertyNames = Object.keys(ctype.schema.properties);
-  const properties = data.getProperties(propertyNames);
+  contentScript.on("requestAttestation", async (ctype, target) => {
+    const identity = getIdentity(store.getState());
+    const data = getData(store.getState());
+    const propertyNames = Object.keys(ctype.schema.properties);
+    const properties = data.getProperties(propertyNames);
 
-  const request = await KiltService.buildAttestationRequest(
-    identity,
-    ctype,
-    properties,
-  );
-  return await KiltService.buildAttestationRequestMessage(
-    identity,
-    request,
-    target,
-  );
-});
+    const request = await KiltService.buildAttestationRequest(
+      identity,
+      ctype,
+      properties,
+    );
+    return await KiltService.buildAttestationRequestMessage(
+      identity,
+      request,
+      target,
+    );
+  });
+}
+
+init();
