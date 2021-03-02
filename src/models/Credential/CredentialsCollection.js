@@ -4,6 +4,14 @@ import Credential from "@models/Credential/Credential";
 import StorageService from "@services/storage";
 
 export default class CredentialsCollection extends Collection {
+  getData(key) {
+    return this.find(({ content }) => !!content[key]);
+  }
+
+  hasData(key) {
+    return !!this.getData(key);
+  }
+
   static parse(str) {
     const credentials = JSON.parse(str);
 

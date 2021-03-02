@@ -1,8 +1,6 @@
 import mirrorCreator from "mirror-creator";
 import { createActions, handleActions } from "redux-actions";
 
-import DataCollection from "@models/Data/DataCollection";
-
 const types = mirrorCreator([
   "ADD_DATA_ENTRY",
   "REMOVE_DATA_ENTRY",
@@ -16,7 +14,7 @@ export const creators = createActions(
 );
 
 export const initialState = {
-  data: new DataCollection(),
+  data: "[]",
 };
 
 export const reducer = handleActions(
@@ -24,7 +22,7 @@ export const reducer = handleActions(
     [types.SET_DATA]: (state, { payload: data }) =>
       Object.freeze({
         ...state,
-        data,
+        data: data.serialize(),
       }),
   },
   initialState,

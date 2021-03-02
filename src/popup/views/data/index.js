@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import dataActions from "@redux/data";
-import { getData } from "@redux/selectors";
+import { getCredentials, getData } from "@redux/selectors";
 
 import "@popup/styles.css";
 
@@ -11,6 +11,7 @@ function Data() {
   const dispatch = useDispatch();
 
   const data = useSelector(getData);
+  const credentials = useSelector(getCredentials);
 
   const removeEntry = (id) => dispatch(dataActions.removeDataEntry(id));
 
@@ -38,7 +39,7 @@ function Data() {
                 <tr key={elem.key}>
                   <td>{elem.key}</td>
                   <td>{elem.value}</td>
-                  <td>{elem.validated ? "✓" : "?"}</td>
+                  <td>{credentials.hasData(elem.key) ? "✓" : "?"}</td>
                   <td>
                     <button onClick={() => removeEntry(elem.id)}>Delete</button>
                   </td>

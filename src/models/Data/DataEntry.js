@@ -1,11 +1,10 @@
 import { v4 as uuidv4 } from "uuid";
 
 export default class DataEntry {
-  constructor(key, value, validated = false, id = null) {
+  constructor(key, value, id = null) {
     this.id = id || uuidv4();
     this.key = key;
     this.value = value;
-    this.validated = validated;
   }
 
   serialize() {
@@ -13,13 +12,12 @@ export default class DataEntry {
       id: this.id,
       key: this.key,
       value: this.value,
-      validated: this.validated,
     });
   }
 
   static parse(str) {
-    const { id, key, value, validated } = JSON.parse(str);
+    const { id, key, value } = JSON.parse(str);
 
-    return new DataEntry(key, value, validated, id);
+    return new DataEntry(key, value, id);
   }
 }

@@ -1,8 +1,6 @@
 import mirrorCreator from "mirror-creator";
 import { createActions, handleActions } from "redux-actions";
 
-import CredentialsCollection from "@models/Credential/CredentialsCollection";
-
 const types = mirrorCreator([
   "ADD_CREDENTIAL",
   "CREATE_CREDENTIAL",
@@ -26,7 +24,7 @@ export const creators = createActions(
 export const initialState = {
   mnemonic: { mnemonic: "", identity: {} },
   balance: 0,
-  credentials: new CredentialsCollection(),
+  credentials: "[]",
 };
 
 export const reducer = handleActions(
@@ -39,7 +37,7 @@ export const reducer = handleActions(
     [types.SET_CREDENTIALS]: (state, { payload: credentials }) =>
       Object.freeze({
         ...state,
-        credentials,
+        credentials: credentials.serialize(),
       }),
     [types.SET_MNEMONIC]: (state, { payload: mnemonic }) =>
       Object.freeze({

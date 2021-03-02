@@ -1,5 +1,8 @@
 import { createSelector } from "reselect";
 
+import DataCollection from "@background/Data/DataCollection";
+import CredentialsCollection from "@background/Kilt/CredentialsCollection";
+
 export const isLaunched = createSelector(
   (state) => state.app,
   (app) => app.launched,
@@ -17,12 +20,12 @@ export const getBalance = createSelector(
 
 export const getCredentials = createSelector(
   (state) => state.kilt,
-  (kilt) => kilt.credentials,
+  (kilt) => CredentialsCollection.parse(kilt.credentials),
 );
 
 export const getData = createSelector(
   (state) => state.data,
-  (data) => data.data,
+  (data) => DataCollection.parse(data.data),
 );
 
 export const getIdentity = createSelector(
