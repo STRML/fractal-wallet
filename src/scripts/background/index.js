@@ -47,11 +47,14 @@ function init() {
       ctype,
       properties,
     );
-    return await KiltService.buildAttestationRequestMessage(
+
+    const response = await KiltService.buildAttestationRequestMessage(
       identity,
       request,
       target,
     );
+
+    return response;
   });
 }
 

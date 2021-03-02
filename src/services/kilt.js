@@ -1,10 +1,12 @@
 import Kilt, {
   Identity,
   Balance,
-  Claim,
-  CType,
   MessageBodyType,
+  RequestForAttestation,
 } from "@kiltprotocol/sdk-js";
+
+import UnsafeCType from "@models/Kilt/UnsafeCType.ts";
+import UnsafeClaim from "@models/Kilt/UnsafeClaim.ts";
 
 class KiltProtocol {
   constructor() {
@@ -68,15 +70,16 @@ class KiltProtocol {
     }
   }
 
-  async buildAttestationRequest(identity, ctypeObj, properties) {
-    const ctype = CType.fromCType(ctypeObj);
-    const claim = Claim.fromCTypeAndClaimContents(
+  async buildAttestationRequest(identity, cTypeObj, properties) {
+    const ctype = UnsafeCType.fromCType(cTypeObj);
+
+    const claim = UnsafeClaim.fromCTypeAndClaimContents(
       ctype,
       properties,
       identity.address,
     );
 
-    const { message } = await Kilt.RequestForAttestation.fromClaimAndIdentity(
+    const { message } = await RequestForAttestation.fromClaimAndIdentity(
       claim,
       identity,
     );
