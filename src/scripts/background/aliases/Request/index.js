@@ -1,3 +1,5 @@
+/* global chrome */
+
 import requestsActions, { requestsTypes } from "@redux/requests";
 import { getPendingRequests, getRequests } from "@redux/selectors";
 
@@ -19,6 +21,17 @@ export const addRequest = ({ payload: { id, attester, properties } }) => {
 
     // update redux store
     dispatch(requestsActions.setRequests(requests));
+
+    // open popup on a new window
+    await chrome.windows.create({
+      focused: true,
+      height: 600,
+      width: 357,
+      left: 0,
+      top: 0,
+      type: "popup",
+      url: "popup.html?route=requests",
+    });
   };
 };
 
@@ -39,6 +52,12 @@ export const acceptRequest = ({ payload: id }) => {
     // update redux store
     dispatch(requestsActions.setRequests(requests));
     dispatch(requestsActions.requestAccepted(acceptedRequest));
+
+    // close new window popup if open
+    const currentWindow = await chrome.windows.getCurrent();
+    if (currentWindow.type === "popup") {
+      await chrome.windows.remove(currentWindow.id);
+    }
   };
 };
 
@@ -77,6 +96,12 @@ export const declineRequest = ({ payload: id }) => {
     // update redux store
     dispatch(requestsActions.setRequests(requests));
     dispatch(requestsActions.requestDeclined(declinedRequest));
+
+    // close new window popup if open
+    const currentWindow = await chrome.windows.getCurrent();
+    if (currentWindow.type === "popup") {
+      await chrome.windows.remove(currentWindow.id);
+    }
   };
 };
 

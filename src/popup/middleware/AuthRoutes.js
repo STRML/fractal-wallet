@@ -6,7 +6,7 @@ import Loading from "@popup/views/loading";
 
 import { isSignedIn, isLaunched } from "@redux/selectors";
 
-function HomeRoutes({ children, ...rest }) {
+function AuthRoutes({ children, ...rest }) {
   const signIn = useSelector(isSignedIn);
   const launched = useSelector(isLaunched);
 
@@ -33,4 +33,4 @@ function HomeRoutes({ children, ...rest }) {
   );
 }
 
-export default HomeRoutes;
+export default AuthRoutes;

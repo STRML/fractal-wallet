@@ -1,7 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import HomeRoutes from "@popup/middleware/HomeRoutes";
+import withRedirectToQueryRoute from "@popup/hooks/withRedirectToQueryRoute";
+import AuthRoutes from "@popup/middleware/AuthRoutes";
 
 import CredentialsIndex from "@popup/views/credentials";
 
@@ -17,34 +18,20 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/landing">
-          <Landing />
-        </Route>
-        <HomeRoutes>
-          <Route path="/data">
-            <Switch>
-              <Route path="/data/create">
-                <DataCreate />
-              </Route>
-              <Route path="/">
-                <DataIndex />
-              </Route>
-            </Switch>
-          </Route>
-          <Route path="/credentials">
-            <Route path="/">
-              <CredentialsIndex />
+        <Route path="/landing" component={Landing} />
+        <AuthRoutes>
+          <Switch>
+            <Route path="/data">
+              <Switch>
+                <Route path="/data/create" component={DataCreate} />
+                <Route path="/" component={DataIndex} />
+              </Switch>
             </Route>
-          </Route>
-          <Route path="/requests">
-            <Route path="/">
-              <RequestsIndex />
-            </Route>
-          </Route>
-          <Route path="/">
-            <Home />
-          </Route>
-        </HomeRoutes>
+            <Route path="/credentials" component={CredentialsIndex} />
+            <Route path="/requests" component={RequestsIndex} />
+            <Route path="/" component={withRedirectToQueryRoute(Home)} />
+          </Switch>
+        </AuthRoutes>
       </Switch>
     </Router>
   );
