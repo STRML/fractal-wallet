@@ -7,8 +7,7 @@ const broadcastCredential = (credential) =>
 
 const getAddress = () => stream.invoke("getAddress");
 
-const getProperties = (properties) =>
-  stream.invoke("getProperties", properties);
+const getProperties = (request) => stream.invoke("getProperties", request);
 
 const hasProperties = (properties) =>
   stream.invoke("hasProperties", properties);

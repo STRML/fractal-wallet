@@ -3,8 +3,8 @@
 import kiltActions, { kiltTypes } from "@redux/kilt";
 import { getCredentials } from "@redux/selectors";
 
-import Mnemonic from "@src/models/Mnemonic";
-import Credential from "@src/models/Credential/Credential";
+import Mnemonic from "@models/Mnemonic";
+import Credential from "@models/Credential";
 
 import KiltService from "@services/kilt";
 
@@ -40,7 +40,7 @@ export const createCredential = () => {
 };
 
 export const addCredential = ({
-  payload: { id, attester, claimer, content, type, createdAt },
+  payload: { id, attester, claimer, properties, type, createdAt },
 }) => {
   return async (dispatch, getState) => {
     const credentials = getCredentials(getState());
@@ -50,7 +50,7 @@ export const addCredential = ({
       id,
       attester,
       claimer,
-      content,
+      properties,
       type,
       createdAt,
     );

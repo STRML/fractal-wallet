@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-import kiltActions from "@src/redux/kilt";
+import kiltActions from "@redux/kilt";
 import { getCredentials } from "@redux/selectors";
 
 import "@popup/styles.css";
@@ -15,12 +15,10 @@ function truncate(str, length = 10) {
   return str;
 }
 
-function renderContent(content) {
-  const values = Object.values(content);
+function renderProperties(properties) {
+  const keys = Object.keys(properties);
 
-  return values.map(({ id, key, value }) => (
-    <p key={id}>{`${key} - ${value}`}</p>
-  ));
+  return keys.map((key) => <p key={key}>{`${key} - ${properties[key]}`}</p>);
 }
 
 function CredentialsHome() {
@@ -47,7 +45,7 @@ function CredentialsHome() {
               <tr>
                 <th>Attester</th>
                 <th>Claimer</th>
-                <th>Content</th>
+                <th>Properties</th>
               </tr>
             </thead>
             <tbody>
@@ -55,7 +53,7 @@ function CredentialsHome() {
                 <tr key={elem.id}>
                   <td>{truncate(elem.attester)}</td>
                   <td>{truncate(elem.claimer)}</td>
-                  <td>{renderContent(elem.content)}</td>
+                  <td>{renderProperties(elem.properties)}</td>
                 </tr>
               ))}
             </tbody>

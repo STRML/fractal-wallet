@@ -3,12 +3,12 @@ import { getData } from "@redux/selectors";
 
 import DataEntry from "@models/Data/DataEntry";
 
-export const addDataEntry = ({ payload: { key, value } }) => {
+export const addDataEntry = ({ payload: { id, key, value } }) => {
   return async (dispatch, getState) => {
     const data = getData(getState());
 
     // create entry instance
-    const entry = new DataEntry(key, value);
+    const entry = new DataEntry(id, key, value);
 
     // append entry
     data.push(entry);

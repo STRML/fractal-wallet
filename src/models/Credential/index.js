@@ -1,12 +1,19 @@
 import { v4 as uuidv4 } from "uuid";
 
 export default class Credential {
-  constructor(id = null, attester, claimer, content, type, createdAt = null) {
+  constructor(
+    id = null,
+    attester,
+    claimer,
+    properties,
+    type,
+    createdAt = null,
+  ) {
     this.id = id || uuidv4();
 
     this.attester = attester;
     this.claimer = claimer;
-    this.content = content;
+    this.properties = properties;
     this.type = type;
 
     this.createdAt = createdAt || new Date();
@@ -17,15 +24,15 @@ export default class Credential {
       id: this.id,
       attester: this.attester,
       claimer: this.claimer,
-      content: this.content,
+      properties: this.properties,
       type: this.type,
       date: this.createdAt,
     });
   }
 
   static parse(str) {
-    const { id, attester, claimer, content, type, date } = JSON.parse(str);
+    const { id, attester, claimer, properties, type, date } = JSON.parse(str);
 
-    return new Credential(id, attester, claimer, content, type, date);
+    return new Credential(id, attester, claimer, properties, type, date);
   }
 }

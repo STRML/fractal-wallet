@@ -4,8 +4,12 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import HomeRoutes from "@popup/middleware/HomeRoutes";
 
 import CredentialsIndex from "@popup/views/credentials";
+
 import DataIndex from "@popup/views/data";
 import DataCreate from "@popup/views/data/create";
+
+import RequestsIndex from "@popup/views/requests";
+
 import Home from "@popup/views/home";
 import Landing from "@popup/views/landing";
 
@@ -30,6 +34,11 @@ function App() {
           <Route path="/credentials">
             <Route path="/">
               <CredentialsIndex />
+            </Route>
+          </Route>
+          <Route path="/requests">
+            <Route path="/">
+              <RequestsIndex />
             </Route>
           </Route>
           <Route path="/">

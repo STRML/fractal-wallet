@@ -33,6 +33,9 @@ function Home() {
         <br />
         <br />
         <Link to="/credentials">Credentials</Link>
+        <br />
+        <br />
+        <Link to="/requests">Requests</Link>
       </div>
     </div>
   );

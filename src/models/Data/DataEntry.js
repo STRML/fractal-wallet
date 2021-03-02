@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 
 export default class DataEntry {
-  constructor(key, value, id = null) {
+  constructor(id = null, key, value) {
     this.id = id || uuidv4();
     this.key = key;
     this.value = value;
@@ -18,6 +18,6 @@ export default class DataEntry {
   static parse(str) {
     const { id, key, value } = JSON.parse(str);
 
-    return new DataEntry(key, value, id);
+    return new DataEntry(id, key, value);
   }
 }

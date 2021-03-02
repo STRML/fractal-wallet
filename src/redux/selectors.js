@@ -1,7 +1,8 @@
 import { createSelector } from "reselect";
 
-import DataCollection from "@background/Data/DataCollection";
-import CredentialsCollection from "@background/Kilt/CredentialsCollection";
+import CredentialsCollection from "@models/Credential/CredentialsCollection";
+import DataCollection from "@models/Data/DataCollection";
+import RequestsCollection from "@models/Request/RequestsCollection";
 
 export const isLaunched = createSelector(
   (state) => state.app,
@@ -43,6 +44,32 @@ export const getAddress = createSelector(
   (kilt) => kilt.mnemonic.address,
 );
 
+export const getRequests = createSelector(
+  (state) => state.requests,
+  (requests) => RequestsCollection.parse(requests.requests),
+);
+
+export const getAcceptedRequests = createSelector(
+  (state) => state.requests,
+  (requests) => {
+    return RequestsCollection.parse(requests.requests).getAccepted();
+  },
+);
+
+export const getDeclinedRequests = createSelector(
+  (state) => state.requests,
+  (requests) => {
+    return RequestsCollection.parse(requests.requests).getDeclined();
+  },
+);
+
+export const getPendingRequests = createSelector(
+  (state) => state.requests,
+  (requests) => {
+    return RequestsCollection.parse(requests.requests).getPending();
+  },
+);
+
 const selectors = {
   isSignedIn,
   getAddress,
@@ -51,6 +78,10 @@ const selectors = {
   getData,
   getIdentity,
   getMnemonic,
+  getRequests,
+  getAcceptedRequests,
+  getDeclinedRequests,
+  getPendingRequests,
 };
 
 export default selectors;

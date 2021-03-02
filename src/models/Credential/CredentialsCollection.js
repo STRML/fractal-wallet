@@ -1,5 +1,5 @@
 import Collection from "@models/Base/Collection";
-import Credential from "@models/Credential/Credential";
+import Credential from "@models/Credential";
 
 import StorageService from "@services/storage";
 
