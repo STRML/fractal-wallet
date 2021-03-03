@@ -20,6 +20,14 @@ export const reducer = handleActions(
   initialState,
 );
 
+export async function restore() {
+  return initialState;
+}
+
+export async function store() {
+  return {};
+}
+
 export const appTypes = types;
 
 export default creators;

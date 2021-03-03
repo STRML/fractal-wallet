@@ -29,14 +29,4 @@ export default class RequestsCollection extends Collection {
 
     return new RequestsCollection(...elements);
   }
-
-  async store() {
-    await StorageService.setItem("requests", this.serialize());
-  }
-
-  static async restore() {
-    const requestsString = await StorageService.getItem("requests", "[]");
-
-    return RequestsCollection.parse(requestsString);
-  }
 }

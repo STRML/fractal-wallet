@@ -1,13 +1,9 @@
-import { alias, wrapStore } from "webext-redux";
-
-import createStore from "@redux";
+import redux from "@redux";
 import appActions from "@redux/app";
 import kiltActions from "@redux/kilt";
 import { getData, getPublicIdentity, getIdentity } from "@redux/selectors";
 import requestsActions, { requestsTypes } from "@redux/requests";
 import { watcher } from "@redux/middleware/watcher";
-
-import aliases from "@background/aliases";
 
 import KiltService from "@services/kilt";
 
@@ -16,11 +12,9 @@ import RequestStatus from "@models/Request/RequestStatus";
 
 const REQUESTS_TIME_OUT = 30 * 1000;
 
-function init() {
+async function init() {
   const contentScript = new ContentScriptConnection();
-  const store = createStore(alias(aliases));
-
-  wrapStore(store);
+  const store = await redux.init();
 
   store.dispatch(appActions.startup());
 

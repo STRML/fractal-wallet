@@ -16,9 +16,6 @@ export const addRequest = ({ payload: { id, attester, properties } }) => {
     // append request
     requests.push(request);
 
-    // store new requests
-    await requests.store();
-
     // update redux store
     dispatch(requestsActions.setRequests(requests));
 
@@ -46,9 +43,6 @@ export const acceptRequest = ({ payload: id }) => {
     // update request status
     requests.updateItem(id, acceptedRequest);
 
-    // store new requests
-    await requests.store();
-
     // update redux store
     dispatch(requestsActions.setRequests(requests));
     dispatch(requestsActions.requestAccepted(acceptedRequest));
@@ -68,9 +62,6 @@ export const removeRequest = ({ payload: id }) => {
     // remove requet
     requests.removeById(id);
 
-    // store new requests
-    await requests.store();
-
     // update redux store
     dispatch(requestsActions.setRequests(requests));
   };
@@ -86,9 +77,6 @@ export const declineRequest = ({ payload: id }) => {
 
     // update request status
     requests.updateItem(id, declinedRequest);
-
-    // store new requests
-    await requests.store();
 
     // update redux store
     dispatch(requestsActions.setRequests(requests));

@@ -28,6 +28,19 @@ export const reducer = handleActions(
   initialState,
 );
 
+export async function restore(state = {}) {
+  return {
+    ...initialState,
+    ...state,
+  };
+}
+
+export async function store(state) {
+  return {
+    data: state.data,
+  };
+}
+
 export const dataTypes = types;
 
 export default creators;

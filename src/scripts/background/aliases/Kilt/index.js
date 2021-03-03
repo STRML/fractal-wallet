@@ -15,9 +15,6 @@ const generateIdentity = () => {
     // create mnemonic class instance
     const instance = new Mnemonic(mnemonic, identity);
 
-    // store new mnemonic
-    await instance.store();
-
     // register balance listener
     const onChangeBalance = (_account, balance) =>
       dispatch(kiltActions.setBalance(balance.toString()));
@@ -57,9 +54,6 @@ export const addCredential = ({
 
     // append credential
     credentials.push(credential);
-
-    // store new credentials
-    await credentials.store();
 
     // update redux store
     dispatch(kiltActions.setCredentials(credentials));

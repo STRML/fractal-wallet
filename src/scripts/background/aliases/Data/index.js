@@ -13,9 +13,6 @@ export const addDataEntry = ({ payload: { id, key, value } }) => {
     // append entry
     data.push(entry);
 
-    // store new data
-    await data.store();
-
     // update redux store
     dispatch(dataActions.setData(data));
   };
@@ -27,9 +24,6 @@ export const removeDataEntry = ({ payload: id }) => {
 
     // remove entry
     data.removeById(id);
-
-    // store new data
-    await data.store();
 
     // update redux store
     dispatch(dataActions.setData(data));

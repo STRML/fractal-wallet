@@ -36,6 +36,19 @@ export const reducer = handleActions(
   initialState,
 );
 
+export async function restore(state = {}) {
+  return {
+    ...initialState,
+    ...state,
+  };
+}
+
+export async function store(state) {
+  return {
+    request: state.request,
+  };
+}
+
 export const requestsTypes = types;
 
 export default creators;

@@ -1,6 +1,8 @@
 import mirrorCreator from "mirror-creator";
 import { createActions, handleActions } from "redux-actions";
 
+import Mnemonic from "@models/Mnemonic";
+
 const types = mirrorCreator([
   "ADD_CREDENTIAL",
   "CREATE_CREDENTIAL",
@@ -47,6 +49,24 @@ export const reducer = handleActions(
   },
   initialState,
 );
+
+export async function restore(state = {}) {
+  return {
+    ...initialState,
+    ...state,
+    mnemonic: state.mnemonic
+      ? await Mnemonic.parse(state.mnemonic)
+      : initialState.mnemonic,
+  };
+}
+
+export async function store(state) {
+  return {
+    mnemonic: state.mnemonic.mnemonic,
+    balance: state.balance.toString(),
+    credentials: state.credentials,
+  };
+}
 
 export const kiltTypes = types;
 
