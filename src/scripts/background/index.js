@@ -3,12 +3,14 @@ import { alias, wrapStore } from "webext-redux";
 import createStore from "@redux";
 import appActions from "@redux/app";
 import kiltActions from "@redux/kilt";
-import { getData, getAddress, getIdentity } from "@redux/selectors";
+import { getData, getPublicIdentity, getIdentity } from "@redux/selectors";
 import requestsActions, { requestsTypes } from "@redux/requests";
 import { watcher } from "@redux/middleware/watcher";
 
 import aliases from "@background/aliases";
+
 import KiltService from "@services/kilt";
+
 import ContentScriptConnection from "@models/Connection/ContentScriptConnection";
 import RequestStatus from "@models/Request/RequestStatus";
 
@@ -80,8 +82,8 @@ function init() {
     store.dispatch(kiltActions.addCredential(credential));
   });
 
-  contentScript.on("getAddress", () => {
-    return getAddress(store.getState());
+  contentScript.on("getPublicIdentity", () => {
+    return getPublicIdentity(store.getState());
   });
 
   contentScript.on("requestAttestation", async (ctype, target) => {

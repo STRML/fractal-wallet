@@ -17,7 +17,7 @@ inpage
     return version;
   })
   .proxy("broadcastCredential")
-  .proxy("getAddress")
   .proxy("getProperties")
+  .proxy("getPublicIdentity")
   .proxy("hasProperties")
   .proxy("requestAttestation");

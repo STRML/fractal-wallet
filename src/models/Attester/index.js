@@ -5,7 +5,7 @@ const stream = new ExtensionConnection();
 const broadcastCredential = (credential) =>
   stream.invoke("broadcastCredential", credential);
 
-const getAddress = () => stream.invoke("getAddress");
+const getPublicIdentity = () => stream.invoke("getPublicIdentity");
 
 const getProperties = (request) => stream.invoke("getProperties", request);
 
@@ -19,7 +19,7 @@ const verifyConnection = () => stream.invoke("verifyConnection");
 
 const Attester = {
   broadcastCredential,
-  getAddress,
+  getPublicIdentity,
   getProperties,
   hasProperties,
   requestAttestation,

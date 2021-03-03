@@ -39,9 +39,9 @@ export const getMnemonic = createSelector(
   (kilt) => kilt.mnemonic.mnemonic,
 );
 
-export const getAddress = createSelector(
+export const getPublicIdentity = createSelector(
   (state) => state.kilt,
-  (kilt) => kilt.mnemonic.address,
+  (kilt) => kilt.mnemonic.identity.getPublicIdentity(),
 );
 
 export const getRequests = createSelector(
@@ -72,7 +72,7 @@ export const getPendingRequests = createSelector(
 
 const selectors = {
   isSignedIn,
-  getAddress,
+  getPublicIdentity,
   getBalance,
   getCredentials,
   getData,
