@@ -37,7 +37,7 @@ export const createCredential = () => {
 };
 
 export const addCredential = ({
-  payload: { id, attester, claimer, properties, type, createdAt },
+  payload: { id, attester, claimer, properties, ctype, claim, createdAt },
 }) => {
   return async (dispatch, getState) => {
     const credentials = getCredentials(getState());
@@ -48,7 +48,8 @@ export const addCredential = ({
       attester,
       claimer,
       properties,
-      type,
+      ctype,
+      claim,
       createdAt,
     );
 

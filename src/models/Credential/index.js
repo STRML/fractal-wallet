@@ -6,16 +6,16 @@ export default class Credential {
     attester,
     claimer,
     properties,
-    type,
+    ctype,
+    claim,
     createdAt = null,
   ) {
     this.id = id || uuidv4();
-
     this.attester = attester;
     this.claimer = claimer;
     this.properties = properties;
-    this.type = type;
-
+    this.ctype = ctype;
+    this.claim = claim;
     this.createdAt = createdAt || new Date();
   }
 
@@ -25,14 +25,31 @@ export default class Credential {
       attester: this.attester,
       claimer: this.claimer,
       properties: this.properties,
-      type: this.type,
+      ctype: this.ctype,
+      claim: this.claim,
       date: this.createdAt,
     });
   }
 
   static parse(str) {
-    const { id, attester, claimer, properties, type, date } = JSON.parse(str);
+    const {
+      id,
+      attester,
+      claimer,
+      properties,
+      ctype,
+      claim,
+      date,
+    } = JSON.parse(str);
 
-    return new Credential(id, attester, claimer, properties, type, date);
+    return new Credential(
+      id,
+      attester,
+      claimer,
+      properties,
+      ctype,
+      claim,
+      date,
+    );
   }
 }

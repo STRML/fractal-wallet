@@ -45,7 +45,7 @@ export async function restore(state = {}) {
 
 export async function store(state) {
   return {
-    request: state.request,
+    requests: state.requests,
   };
 }
 

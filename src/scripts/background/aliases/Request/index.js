@@ -1,17 +1,19 @@
 /* global chrome */
 
 import requestsActions, { requestsTypes } from "@redux/requests";
-import { getPendingRequests, getRequests } from "@redux/selectors";
+import kiltActions from "@redux/kilt";
+import { getRequests } from "@redux/selectors";
 
 import Request from "@models/Request";
 import RequestStatus from "@models/Request/RequestStatus";
+import RequestTypes from "@models/Request/RequestTypes";
 
-export const addRequest = ({ payload: { id, attester, properties } }) => {
+export const addRequest = ({ payload: { id, requester, content, type } }) => {
   return async (dispatch, getState) => {
     const requests = getRequests(getState());
 
     // create request instance
-    const request = new Request(id, attester, properties);
+    const request = new Request(id, requester, content, type);
 
     // append request
     requests.push(request);
@@ -23,7 +25,7 @@ export const addRequest = ({ payload: { id, attester, properties } }) => {
     await chrome.windows.create({
       focused: true,
       height: 600,
-      width: 357,
+      width: 400,
       left: 0,
       top: 0,
       type: "popup",
@@ -34,7 +36,7 @@ export const addRequest = ({ payload: { id, attester, properties } }) => {
 
 export const acceptRequest = ({ payload: id }) => {
   return async (dispatch, getState) => {
-    const requests = getPendingRequests(getState());
+    const requests = getRequests(getState());
 
     // get request
     const acceptedRequest = requests.getById(id);
@@ -46,6 +48,11 @@ export const acceptRequest = ({ payload: id }) => {
     // update redux store
     dispatch(requestsActions.setRequests(requests));
     dispatch(requestsActions.requestAccepted(acceptedRequest));
+
+    // check if it's a store credential request type
+    if (acceptedRequest.type === RequestTypes.STORE_CREDENTIAL) {
+      dispatch(kiltActions.addCredential(acceptedRequest.content));
+    }
 
     // close new window popup if open
     const currentWindow = await chrome.windows.getCurrent();
@@ -69,7 +76,7 @@ export const removeRequest = ({ payload: id }) => {
 
 export const declineRequest = ({ payload: id }) => {
   return async (dispatch, getState) => {
-    const requests = getPendingRequests(getState());
+    const requests = getRequests(getState());
 
     // get request
     const declinedRequest = requests.getById(id);

@@ -2,6 +2,8 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
+import RequestTypes from "@models/Request/RequestTypes";
+
 import requestsActions from "@redux/requests";
 import {
   getAcceptedRequests,
@@ -19,10 +21,26 @@ function truncate(str, length = 10) {
   return str;
 }
 
-function renderProperties(properties) {
-  const values = Object.values(properties);
+function renderShareRequestContent(content) {
+  const values = Object.values(content);
 
   return values.map((value) => <p key={value}>{value}</p>);
+}
+
+function renderCredentialRequestContent(content) {
+  const keys = Object.keys(content.properties);
+
+  return keys.map((key) => (
+    <p key={key}>{`${key} - ${content.properties[key]}`}</p>
+  ));
+}
+
+function renderContent(content, type) {
+  if (type === RequestTypes.SHARE_DATA) {
+    return renderShareRequestContent(content);
+  }
+
+  return renderCredentialRequestContent(content);
 }
 
 function renderAcceptedRequests(requests) {
@@ -32,15 +50,17 @@ function renderAcceptedRequests(requests) {
       <table>
         <thead>
           <tr>
-            <th>Attester</th>
-            <th>Properties</th>
+            <th>Requester</th>
+            <th>Content</th>
+            <th>Type</th>
           </tr>
         </thead>
         <tbody>
           {requests.map((elem) => (
             <tr key={elem.id}>
-              <td>{truncate(elem.attester)}</td>
-              <td>{renderProperties(elem.properties)}</td>
+              <td>{truncate(elem.requester)}</td>
+              <td>{renderContent(elem.content, elem.type)}</td>
+              <td>{elem.type}</td>
             </tr>
           ))}
         </tbody>
@@ -56,15 +76,17 @@ function renderDeclinedRequests(requests) {
       <table>
         <thead>
           <tr>
-            <th>Attester</th>
-            <th>Properties</th>
+            <th>Requester</th>
+            <th>Content</th>
+            <th>Type</th>
           </tr>
         </thead>
         <tbody>
           {requests.map((elem) => (
             <tr key={elem.id}>
-              <td>{truncate(elem.attester)}</td>
-              <td>{renderProperties(elem.properties)}</td>
+              <td>{truncate(elem.requester)}</td>
+              <td>{renderContent(elem.content, elem.type)}</td>
+              <td>{elem.type}</td>
             </tr>
           ))}
         </tbody>
@@ -80,16 +102,18 @@ function renderPendingRequests(requests, acceptCallback, declineCallback) {
       <table>
         <thead>
           <tr>
-            <th>Attester</th>
-            <th>Properties</th>
+            <th>Requester</th>
+            <th>Content</th>
+            <th>Type</th>
             <th />
           </tr>
         </thead>
         <tbody>
           {requests.map((elem) => (
             <tr key={elem.id}>
-              <td>{truncate(elem.attester)}</td>
-              <td>{renderProperties(elem.properties)}</td>
+              <td>{truncate(elem.requester)}</td>
+              <td>{renderContent(elem.content, elem.type)}</td>
+              <td>{elem.type}</td>
               <td>
                 <button onClick={() => acceptCallback(elem.id)}>Accept</button>
                 <button onClick={() => declineCallback(elem.id)}>
@@ -128,7 +152,7 @@ function RequestsIndex() {
       <h2>
         <strong>Requests</strong>
       </h2>
-      {!hasRequets && <p>No data share requests.</p>}
+      {!hasRequets && <p>No data requests.</p>}
       {hasRequets && (
         <div>
           {hasPendingRequets &&

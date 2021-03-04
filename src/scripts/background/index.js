@@ -1,6 +1,8 @@
+import { v4 as uuidv4 } from "uuid";
+import { Message } from "@kiltprotocol/sdk-js";
+
 import redux from "@redux";
 import appActions from "@redux/app";
-import kiltActions from "@redux/kilt";
 import { getData, getPublicIdentity, getIdentity } from "@redux/selectors";
 import requestsActions, { requestsTypes } from "@redux/requests";
 import { watcher } from "@redux/middleware/watcher";
@@ -9,6 +11,7 @@ import KiltService from "@services/kilt";
 
 import ContentScriptConnection from "@models/Connection/ContentScriptConnection";
 import RequestStatus from "@models/Request/RequestStatus";
+import RequestTypes from "@models/Request/RequestTypes";
 
 const REQUESTS_TIME_OUT = 30 * 1000;
 
@@ -24,9 +27,16 @@ async function init() {
     return data.hasProperties(properties);
   });
 
-  contentScript.on("getProperties", (request) => {
+  contentScript.on("getProperties", (content, { address: requester }) => {
     return new Promise((resolve, reject) => {
       const data = getData(store.getState());
+
+      const request = {
+        id: uuidv4(),
+        requester,
+        content,
+        type: RequestTypes.SHARE_DATA,
+      };
 
       store.dispatch(requestsActions.addRequest(request));
 
@@ -51,7 +61,7 @@ async function init() {
             acceptedListener.unsubscribe();
             clearTimeout(requestTimeout);
 
-            resolve(data.getProperties(request.properties));
+            resolve(data.getProperties(acceptedRequest.content));
           }
         },
       );
@@ -72,13 +82,35 @@ async function init() {
     });
   });
 
-  contentScript.on("broadcastCredential", (credential) => {
-    store.dispatch(kiltActions.addCredential(credential));
-  });
+  contentScript.on(
+    "broadcastCredential",
+    ({ attestedClaim }, { address: requester }) => {
+      const identity = getIdentity(store.getState());
 
-  contentScript.on("getPublicIdentity", () => {
-    return getPublicIdentity(store.getState());
-  });
+      // build credential
+      const {
+        body: { content },
+      } = KiltService.buildCredentialFromAttestation(identity, attestedClaim);
+
+      const request = {
+        requester,
+        content: {
+          attester: content.attestation.owner,
+          claimer: content.request.claim.owner,
+          properties: content.request.claim.contents,
+          ctype: content.request.claim.cTypeHash,
+          claim: content,
+        },
+        type: RequestTypes.STORE_CREDENTIAL,
+      };
+
+      store.dispatch(requestsActions.addRequest(request));
+    },
+  );
+
+  contentScript.on("getPublicIdentity", () =>
+    getPublicIdentity(store.getState()),
+  );
 
   contentScript.on("requestAttestation", async (ctype, target) => {
     const identity = getIdentity(store.getState());

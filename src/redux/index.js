@@ -2,6 +2,8 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import { alias, wrapStore } from "webext-redux";
 import thunk from "redux-thunk";
 
+import watcher from "@redux/middleware/watcher";
+
 import StorageService from "@services/storage";
 
 import aliases from "@background/aliases";
@@ -75,7 +77,7 @@ class Store {
   }
 
   static getMiddleware() {
-    return applyMiddleware(alias(aliases), thunk);
+    return applyMiddleware(watcher, alias(aliases), thunk);
   }
 
   async deserializeAndRestore() {

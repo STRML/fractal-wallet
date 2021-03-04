@@ -5,14 +5,16 @@ import RequestStatus from "./RequestStatus";
 export default class Request {
   constructor(
     id = null,
-    attester,
-    properties,
+    requester,
+    content,
+    type,
     status = RequestStatus.PENDING,
     createdAt = null,
   ) {
     this.id = id || uuidv4();
-    this.attester = attester;
-    this.properties = properties;
+    this.requester = requester;
+    this.content = content;
+    this.type = type;
     this.status = status;
     this.createdAt = createdAt || new Date();
   }
@@ -20,16 +22,17 @@ export default class Request {
   serialize() {
     return JSON.stringify({
       id: this.id,
-      attester: this.attester,
-      properties: this.properties,
+      requester: this.requester,
+      content: this.content,
+      type: this.type,
       status: this.status,
       createdAt: this.createdAt,
     });
   }
 
   static parse(str) {
-    const { id, attester, properties, status, createdAt } = JSON.parse(str);
+    const { id, requester, content, type, status, createdAt } = JSON.parse(str);
 
-    return new Request(id, attester, properties, status, createdAt);
+    return new Request(id, requester, content, type, status, createdAt);
   }
 }

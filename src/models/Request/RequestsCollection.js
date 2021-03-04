@@ -3,8 +3,6 @@ import Collection from "@models/Base/Collection";
 import Request from "@models/Request/";
 import RequestStatus from "@models/Request/RequestStatus";
 
-import StorageService from "@services/storage";
-
 export default class RequestsCollection extends Collection {
   filterByStatus(status) {
     return this.filter(({ status: itemStatus }) => itemStatus === status);

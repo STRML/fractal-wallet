@@ -3,7 +3,7 @@ import Credential from "@models/Credential";
 
 export default class CredentialsCollection extends Collection {
   getData(key) {
-    return this.find(({ content }) => !!content[key]);
+    return this.find(({ properties }) => !!properties[key]);
   }
 
   hasData(key) {

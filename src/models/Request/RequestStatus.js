@@ -1,8 +1,8 @@
-const types = {
+const status = {
   PENDING: "pending",
   DECLINED: "declined",
   ACCEPTED: "accepted",
   TIMED_OUT: "timed_out",
 };
 
-export default types;
+export default status;

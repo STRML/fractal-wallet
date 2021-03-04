@@ -97,6 +97,12 @@ class KiltProtocol {
 
     return message.encrypt();
   }
+
+  buildCredentialFromEncrpytedAttestation(identity, attestedClaim) {
+    const credential = Kilt.Message.decrypt(attestedClaim, identity);
+
+    return credential;
+  }
 }
 
 const kilt = KiltProtocol.getInstance();
