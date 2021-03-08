@@ -3,11 +3,9 @@ import LocalMessageDuplexStream from "post-message-stream";
 import Invokation from "@models/Message/Invokation";
 import Response from "@models/Message/Response";
 
-import { extension } from "./params";
-
 export default class ExtensionConnection {
-  constructor() {
-    this.stream = new LocalMessageDuplexStream(extension);
+  constructor(params) {
+    this.stream = new LocalMessageDuplexStream(params);
     this.callbacks = {};
 
     this._setupEvents();

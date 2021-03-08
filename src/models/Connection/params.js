@@ -6,18 +6,30 @@
  * Background -> Script : ContentScriptConnection
  */
 
-const INPAGE = "fractal-inpage";
-const CONTENT_SCRIPT = "fractal-contentscript";
+const INPAGE_ATTESTER = "fractal-inpage-attester";
+const INPAGE_PUBLISHER = "fractal-inpage-publisher";
+const CONTENT_SCRIPT_ATTESTER = "fractal-contentscript-attester";
+const CONTENT_SCRIPT_PUBLISHER = "fractal-contentscript-publisher";
 const BACKGROUND = "fractal-background";
 
-export const inpage = {
-  name: CONTENT_SCRIPT,
-  target: INPAGE,
+export const inpage_attester = {
+  name: CONTENT_SCRIPT_ATTESTER,
+  target: INPAGE_ATTESTER,
 };
 
-export const extension = {
-  name: INPAGE,
-  target: CONTENT_SCRIPT,
+export const inpage_publisher = {
+  name: CONTENT_SCRIPT_PUBLISHER,
+  target: INPAGE_PUBLISHER,
+};
+
+export const extension_attester = {
+  name: INPAGE_ATTESTER,
+  target: CONTENT_SCRIPT_ATTESTER,
+};
+
+export const extension_publisher = {
+  name: INPAGE_PUBLISHER,
+  target: CONTENT_SCRIPT_PUBLISHER,
 };
 
 export const background = {

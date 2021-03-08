@@ -1,6 +1,7 @@
 import ExtensionConnection from "@models/Connection/ExtensionConnection";
+import { extension_attester } from "@models/Connection/params";
 
-const stream = new ExtensionConnection();
+const stream = new ExtensionConnection(extension_attester);
 
 const broadcastCredential = (...args) =>
   stream.invoke("broadcastCredential", ...args);

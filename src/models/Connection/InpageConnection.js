@@ -3,11 +3,9 @@ import LocalMessageDuplexStream from "post-message-stream";
 import Invokation from "@models/Message/Invokation";
 import Response from "@models/Message/Response";
 
-import { inpage } from "./params";
-
 export default class InpageConnection {
-  constructor(background) {
-    this.stream = new LocalMessageDuplexStream(inpage);
+  constructor(params, background) {
+    this.stream = new LocalMessageDuplexStream(params);
     this.proxiedMethods = new Set();
     this.callbacks = {};
     this.background = background;

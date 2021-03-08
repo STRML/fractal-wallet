@@ -1,7 +1,7 @@
 /* global chrome */
 
 import Response from "@models/Message/Response";
-import { background } from "./params";
+import { background } from "@models/Connection/params";
 
 export default class BackgroundConnection {
   constructor() {
