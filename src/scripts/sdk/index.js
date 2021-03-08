@@ -1,5 +1,6 @@
 import Attester from "@models/Attester";
+import Publisher from "@models/Publisher";
 
 (() => {
-  window.Fractal = { Attester };
+  window.Fractal = { Attester, Publisher };
 })();

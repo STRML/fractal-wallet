@@ -98,10 +98,19 @@ class KiltProtocol {
     return message.encrypt();
   }
 
-  buildCredentialFromEncrpytedAttestation(identity, attestedClaim) {
-    const credential = Kilt.Message.decrypt(attestedClaim, identity);
+  decryptMessage(identity, message) {
+    return Kilt.Message.decrypt(message, identity);
+  }
 
-    return credential;
+  async buildPresentationMessage(identity, credential, target) {
+    const body = {
+      content: [credential.claim],
+      type: MessageBodyType.SUBMIT_CLAIMS_FOR_CTYPES,
+    };
+
+    const message = new Kilt.Message(body, identity, target);
+
+    return message.encrypt();
   }
 }
 

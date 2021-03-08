@@ -1,9 +1,13 @@
 import { v4 as uuidv4 } from "uuid";
-import { Message } from "@kiltprotocol/sdk-js";
 
 import redux from "@redux";
 import appActions from "@redux/app";
-import { getData, getPublicIdentity, getIdentity } from "@redux/selectors";
+import {
+  getCredentials,
+  getData,
+  getPublicIdentity,
+  getIdentity,
+} from "@redux/selectors";
 import requestsActions, { requestsTypes } from "@redux/requests";
 import { watcher } from "@redux/middleware/watcher";
 
@@ -27,70 +31,71 @@ async function init() {
     return data.hasProperties(properties);
   });
 
-  contentScript.on("getProperties", (content, { address: requester }) => {
-    return new Promise((resolve, reject) => {
-      const data = getData(store.getState());
+  contentScript.on(
+    "getProperties",
+    (content, { address: requester }) =>
+      new Promise((resolve, reject) => {
+        const data = getData(store.getState());
 
-      const request = {
-        id: uuidv4(),
-        requester,
-        content,
-        type: RequestTypes.SHARE_DATA,
-      };
+        const request = {
+          id: uuidv4(),
+          requester,
+          content,
+          type: RequestTypes.SHARE_DATA,
+        };
 
-      store.dispatch(requestsActions.addRequest(request));
+        store.dispatch(requestsActions.addRequest(request));
 
-      // assign timeout to the request
-      let acceptedListener, declinedListener;
-      const requestTimeout = setTimeout(() => {
-        store.dispatch(requestsActions.removeRequest(request.id));
+        // assign timeout to the request
+        let acceptedListener, declinedListener;
+        const requestTimeout = setTimeout(() => {
+          store.dispatch(requestsActions.removeRequest(request.id));
 
-        // unsubscribe redux watchers and reject
-        acceptedListener.unsubscribe();
-        declinedListener.unsubscribe();
+          // unsubscribe redux watchers and reject
+          acceptedListener.unsubscribe();
+          declinedListener.unsubscribe();
 
-        reject(RequestStatus.TIMED_OUT);
-      }, REQUESTS_TIME_OUT);
+          reject(RequestStatus.TIMED_OUT);
+        }, REQUESTS_TIME_OUT);
 
-      acceptedListener = watcher.subscribe(
-        requestsTypes.REQUEST_ACCEPTED,
-        (acceptedRequest) => {
-          if (acceptedRequest.id === request.id) {
-            // unsubscribe redux watchers and clear timeout
-            acceptedListener.unsubscribe();
-            acceptedListener.unsubscribe();
-            clearTimeout(requestTimeout);
+        acceptedListener = watcher.subscribe(
+          requestsTypes.REQUEST_ACCEPTED,
+          (acceptedRequest) => {
+            if (acceptedRequest.id === request.id) {
+              // unsubscribe redux watchers and clear timeout
+              acceptedListener.unsubscribe();
+              acceptedListener.unsubscribe();
+              clearTimeout(requestTimeout);
 
-            resolve(data.getProperties(acceptedRequest.content));
-          }
-        },
-      );
+              resolve(data.getProperties(acceptedRequest.content));
+            }
+          },
+        );
 
-      declinedListener = watcher.subscribe(
-        requestsTypes.REQUEST_DECLINED,
-        (declinedRequest) => {
-          if (declinedRequest.id === request.id) {
-            // unsubscribe redux watchers and clear timeout
-            acceptedListener.unsubscribe();
-            declinedListener.unsubscribe();
-            clearTimeout(requestTimeout);
+        declinedListener = watcher.subscribe(
+          requestsTypes.REQUEST_DECLINED,
+          (declinedRequest) => {
+            if (declinedRequest.id === request.id) {
+              // unsubscribe redux watchers and clear timeout
+              acceptedListener.unsubscribe();
+              declinedListener.unsubscribe();
+              clearTimeout(requestTimeout);
 
-            reject(RequestStatus.DECLINED);
-          }
-        },
-      );
-    });
-  });
+              reject(RequestStatus.DECLINED);
+            }
+          },
+        );
+      }),
+  );
 
   contentScript.on(
     "broadcastCredential",
     ({ attestedClaim }, { address: requester }) => {
       const identity = getIdentity(store.getState());
 
-      // build credential
       const {
         body: { content },
-      } = KiltService.buildCredentialFromAttestation(identity, attestedClaim);
+      } = KiltService.decryptMessage(identity, attestedClaim);
 
       const request = {
         requester,
@@ -132,6 +137,86 @@ async function init() {
 
     return response;
   });
+
+  contentScript.on("hasCredential", (ctypeHash) => {
+    const credentials = getCredentials(store.getState());
+
+    return credentials.hasCType(ctypeHash);
+  });
+
+  contentScript.on(
+    "getCredential",
+    (message, target) =>
+      new Promise((resolve, reject) => {
+        const identity = getIdentity(store.getState());
+        const credentials = getCredentials(store.getState());
+
+        const {
+          body: {
+            content: {
+              ctypes: [cTypeHash],
+            },
+          },
+        } = KiltService.decryptMessage(identity, message);
+
+        const request = {
+          id: uuidv4(),
+          requester: target.address,
+          content: cTypeHash,
+          type: RequestTypes.SHARE_CREDENTIAL,
+        };
+
+        store.dispatch(requestsActions.addRequest(request));
+
+        // TODO: Refactor this duplicated code
+        // assign timeout to the request
+        let acceptedListener, declinedListener;
+        const requestTimeout = setTimeout(() => {
+          store.dispatch(requestsActions.removeRequest(request.id));
+
+          // unsubscribe redux watchers and reject
+          acceptedListener.unsubscribe();
+          declinedListener.unsubscribe();
+
+          reject(RequestStatus.TIMED_OUT);
+        }, REQUESTS_TIME_OUT);
+
+        acceptedListener = watcher.subscribe(
+          requestsTypes.REQUEST_ACCEPTED,
+          async (acceptedRequest) => {
+            if (acceptedRequest.id === request.id) {
+              // unsubscribe redux watchers and clear timeout
+              acceptedListener.unsubscribe();
+              acceptedListener.unsubscribe();
+              clearTimeout(requestTimeout);
+
+              const credential = credentials.getByCType(cTypeHash);
+              const response = await KiltService.buildPresentationMessage(
+                identity,
+                credential,
+                target,
+              );
+
+              resolve(response);
+            }
+          },
+        );
+
+        declinedListener = watcher.subscribe(
+          requestsTypes.REQUEST_DECLINED,
+          (declinedRequest) => {
+            if (declinedRequest.id === request.id) {
+              // unsubscribe redux watchers and clear timeout
+              acceptedListener.unsubscribe();
+              declinedListener.unsubscribe();
+              clearTimeout(requestTimeout);
+
+              reject(RequestStatus.DECLINED);
+            }
+          },
+        );
+      }),
+  );
 }
 
 init();
