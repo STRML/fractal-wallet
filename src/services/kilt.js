@@ -8,12 +8,13 @@ import Kilt, {
 import UnsafeCType from "@models/Kilt/UnsafeCType.ts";
 import UnsafeClaim from "@models/Kilt/UnsafeClaim.ts";
 
+const { REACT_APP_BLOCKCHAIN_HOST: BLOCKCHAIN_HOST } = process.env;
+
 class KiltProtocol {
   constructor() {
     this.host = undefined;
     this.instance = undefined;
 
-    this.connected = false;
     this.listening = false;
   }
 
@@ -25,21 +26,8 @@ class KiltProtocol {
     return this.instance;
   }
 
-  async connect(host = process.env.REACT_APP_BLOCKCHAIN_HOST) {
-    this.host = host;
-    if (this.connected) {
-      await this.disconnect();
-    }
-
-    await Kilt.connect(this.host);
-    this.connected = true;
-  }
-
-  async disconnect() {
-    if (this.connected) {
-      await Kilt.disconnect(this.host);
-      this.connected = false;
-    }
+  async init(address = BLOCKCHAIN_HOST) {
+    await Kilt.init({ address });
   }
 
   async generateIdentity() {
@@ -79,12 +67,12 @@ class KiltProtocol {
       identity.address,
     );
 
-    const { message } = await RequestForAttestation.fromClaimAndIdentity(
+    const requestForAttestation = await RequestForAttestation.fromClaimAndIdentity(
       claim,
       identity,
     );
 
-    return message;
+    return requestForAttestation;
   }
 
   async buildAttestationRequestMessage(identity, request, target) {

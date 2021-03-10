@@ -518,6 +518,12 @@ module.exports = function (webpackEnv) {
             // Make sure to add the new loader(s) before the "file" loader.
           ],
         },
+        // Read .mjs files in node_modules as normal javascript files
+        {
+          test: /\.mjs$/,
+          include: /node_modules/,
+          type: "javascript/auto",
+        },
       ],
     },
     plugins: [

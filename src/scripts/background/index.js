@@ -21,6 +21,7 @@ const REQUESTS_TIME_OUT = 30 * 1000;
 
 async function init() {
   const contentScript = new ContentScriptConnection();
+  await KiltService.init();
   const store = await redux.init();
 
   store.dispatch(appActions.startup());

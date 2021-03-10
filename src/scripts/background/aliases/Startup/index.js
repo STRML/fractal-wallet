@@ -11,9 +11,6 @@ export const startup = () => {
     const mnemonic = getMnemonic(getState());
     const identity = getIdentity(getState());
 
-    // connect to the kilt chain
-    await KiltService.connect();
-
     // register balance listener
     if (mnemonic.length > 0) {
       const onChangeBalance = (_account, balance) =>
