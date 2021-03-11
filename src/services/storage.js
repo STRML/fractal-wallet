@@ -15,8 +15,9 @@ class Storage {
 
   hasItem(key) {
     return new Promise((resolve, reject) => {
-      chrome.storage.sync.get([key], (result) => {
+      chrome.storage.local.get([key], (result) => {
         if (chrome.runtime.lastError) {
+          console.error(chrome.runtime.lastError);
           reject(new Error(`Storage: could not check if key '${key}' is set`));
         }
 
@@ -27,8 +28,9 @@ class Storage {
 
   getItem(key, ifNull = undefined) {
     return new Promise((resolve, reject) => {
-      chrome.storage.sync.get([key], (result) => {
+      chrome.storage.local.get([key], (result) => {
         if (chrome.runtime.lastError) {
+          console.error(chrome.runtime.lastError);
           reject(new Error(`Storage: could not get key '${key}'`));
         }
 
@@ -39,8 +41,9 @@ class Storage {
 
   setItem(key, value) {
     return new Promise((resolve, reject) => {
-      chrome.storage.sync.set({ [key]: value }, () => {
+      chrome.storage.local.set({ [key]: value }, () => {
         if (chrome.runtime.lastError) {
+          console.error(chrome.runtime.lastError);
           reject(new Error(`Storage: could not set value '${value}'`));
         }
 
@@ -51,8 +54,9 @@ class Storage {
 
   removeItem(key) {
     return new Promise((resolve, reject) => {
-      chrome.storage.sync.remove([key], () => {
+      chrome.storage.local.remove([key], () => {
         if (chrome.runtime.lastError) {
+          console.error(chrome.runtime.lastError);
           reject(new Error(`Storage: could not remove key '${key}'`));
         }
 
@@ -63,8 +67,9 @@ class Storage {
 
   clear() {
     return new Promise((resolve, reject) => {
-      chrome.storage.sync.clear(() => {
+      chrome.storage.local.clear(() => {
         if (chrome.runtime.lastError) {
+          console.error(chrome.runtime.lastError);
           reject(new Error("Storage: could not clear"));
         }
 
