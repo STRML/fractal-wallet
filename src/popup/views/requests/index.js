@@ -27,6 +27,10 @@ function renderShareRequestContent(content) {
   return values.map((value) => <p key={value}>{value}</p>);
 }
 
+function renderShareCredentialContent(content) {
+  return <p>{truncate(content)}</p>;
+}
+
 function renderCredentialRequestContent(content) {
   const keys = Object.keys(content.properties);
 
@@ -38,6 +42,10 @@ function renderCredentialRequestContent(content) {
 function renderContent(content, type) {
   if (type === RequestTypes.SHARE_DATA) {
     return renderShareRequestContent(content);
+  }
+
+  if (type === RequestTypes.SHARE_CREDENTIAL) {
+    return renderShareCredentialContent(content);
   }
 
   return renderCredentialRequestContent(content);
