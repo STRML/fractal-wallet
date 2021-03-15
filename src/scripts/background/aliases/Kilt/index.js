@@ -95,11 +95,27 @@ export const verifyCredential = ({ payload: id }) => {
   };
 };
 
+export const removeCredential = ({ payload: id }) => {
+  return async (dispatch, getState) => {
+    const credentials = getCredentials(getState());
+
+    // get request
+    const credential = credentials.getById(id);
+
+    // remove credential
+    credentials.removeById(credential.id);
+
+    // update redux store
+    dispatch(kiltActions.setCredentials(credentials));
+  };
+};
+
 const Aliases = {
   [kiltTypes.GENERATE_IDENTITY]: generateIdentity,
   [kiltTypes.CREATE_CREDENTIAL]: createCredential,
   [kiltTypes.ADD_CREDENTIAL]: addCredential,
   [kiltTypes.VERIFY_CREDENTIAL]: verifyCredential,
+  [kiltTypes.REMOVE_CREDENTIAL]: removeCredential,
 };
 
 export default Aliases;

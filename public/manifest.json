@@ -20,8 +20,9 @@
   ],
   "web_accessible_resources": [
     {
+      "matches": ["<all_urls>"],
       "resources": ["sdk.bundle.js"],
-      "matches": []
+      "run_at": "document_end"
     }
   ],
   "icons": {

@@ -1,7 +1,7 @@
 import Kilt, {
   AttestedClaim,
-  Identity,
   Balance,
+  Identity,
   MessageBodyType,
   RequestForAttestation,
 } from "@kiltprotocol/sdk-js";

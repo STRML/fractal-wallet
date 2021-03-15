@@ -28,6 +28,7 @@ function CredentialsHome() {
 
   const createCredential = () => dispatch(kiltActions.createCredential());
   const verifyCredential = (id) => dispatch(kiltActions.verifyCredential(id));
+  const deleteCredential = (id) => dispatch(kiltActions.removeCredential(id));
 
   return (
     <div className="Popup">
@@ -48,6 +49,7 @@ function CredentialsHome() {
                 <th>Claimer</th>
                 <th>Properties</th>
                 <th>Status</th>
+                <th />
               </tr>
             </thead>
             <tbody>
@@ -60,6 +62,11 @@ function CredentialsHome() {
                     <p>{elem.status}</p>
                     <button onClick={() => verifyCredential(elem.id)}>
                       Verify
+                    </button>
+                  </td>
+                  <td>
+                    <button onClick={() => deleteCredential(elem.id)}>
+                      Delete
                     </button>
                   </td>
                 </tr>
