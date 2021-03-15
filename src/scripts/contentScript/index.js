@@ -21,7 +21,6 @@ inpageAttester
   .proxy("broadcastCredential")
   .proxy("getProperties")
   .proxy("getPublicIdentity")
-  .proxy("hasProperties")
   .proxy("requestAttestation");
 
 inpagePublisher
@@ -30,5 +29,4 @@ inpagePublisher
     return version;
   })
   .proxy("getPublicIdentity")
-  .proxy("getCredential")
-  .proxy("hasCredential");
+  .proxy("getCredential");

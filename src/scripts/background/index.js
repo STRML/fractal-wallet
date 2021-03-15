@@ -26,12 +26,6 @@ async function init() {
 
   store.dispatch(appActions.startup());
 
-  contentScript.on("hasProperties", (properties) => {
-    const data = getData(store.getState());
-
-    return data.hasProperties(properties);
-  });
-
   contentScript.on(
     "getProperties",
     (content, { address: requester }) =>
@@ -137,12 +131,6 @@ async function init() {
     );
 
     return response;
-  });
-
-  contentScript.on("hasCredential", (ctypeHash) => {
-    const credentials = getCredentials(store.getState());
-
-    return credentials.hasCType(ctypeHash);
   });
 
   contentScript.on(

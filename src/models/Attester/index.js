@@ -10,8 +10,6 @@ const getPublicIdentity = () => stream.invoke("getPublicIdentity");
 
 const getProperties = (...args) => stream.invoke("getProperties", ...args);
 
-const hasProperties = (...args) => stream.invoke("hasProperties", ...args);
-
 const requestAttestation = (...args) =>
   stream.invoke("requestAttestation", ...args);
 
@@ -21,7 +19,6 @@ const Attester = {
   broadcastCredential,
   getPublicIdentity,
   getProperties,
-  hasProperties,
   requestAttestation,
   verifyConnection,
 };
