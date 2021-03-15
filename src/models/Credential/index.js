@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
+import CredentialStatus from "@models/Credential/CredentialStatus";
 
 export default class Credential {
   constructor(
@@ -8,6 +9,7 @@ export default class Credential {
     properties,
     ctype,
     claim,
+    status = CredentialStatus.UNKNOWN,
     createdAt = null,
   ) {
     this.id = id || uuidv4();
@@ -16,6 +18,7 @@ export default class Credential {
     this.properties = properties;
     this.ctype = ctype;
     this.claim = claim;
+    this.status = status;
     this.createdAt = createdAt || new Date();
   }
 
@@ -27,6 +30,7 @@ export default class Credential {
       properties: this.properties,
       ctype: this.ctype,
       claim: this.claim,
+      status: this.status,
       date: this.createdAt,
     });
   }
@@ -39,6 +43,7 @@ export default class Credential {
       properties,
       ctype,
       claim,
+      status,
       date,
     } = JSON.parse(str);
 
@@ -49,6 +54,7 @@ export default class Credential {
       properties,
       ctype,
       claim,
+      status,
       date,
     );
   }

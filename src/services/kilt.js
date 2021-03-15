@@ -1,4 +1,5 @@
 import Kilt, {
+  AttestedClaim,
   Identity,
   Balance,
   MessageBodyType,
@@ -28,6 +29,7 @@ class KiltProtocol {
 
   async init(address = BLOCKCHAIN_HOST) {
     await Kilt.init({ address });
+    console.log("connected to kilt blockchain at: " + address);
   }
 
   async generateIdentity() {
@@ -99,6 +101,16 @@ class KiltProtocol {
     const message = new Kilt.Message(body, identity, target);
 
     return message.encrypt();
+  }
+
+  async verifyCredential(credential) {
+    const attestedClaim = await AttestedClaim.fromAttestedClaim(
+      credential.claim,
+    );
+
+    const valid = await attestedClaim.verify();
+
+    return valid;
   }
 }
 

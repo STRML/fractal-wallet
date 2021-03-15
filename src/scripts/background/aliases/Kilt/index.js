@@ -5,6 +5,7 @@ import { getCredentials } from "@redux/selectors";
 
 import Mnemonic from "@models/Mnemonic";
 import Credential from "@models/Credential";
+import CredentialStatus from "@models/Credential/CredentialStatus";
 
 import KiltService from "@services/kilt";
 
@@ -37,7 +38,16 @@ export const createCredential = () => {
 };
 
 export const addCredential = ({
-  payload: { id, attester, claimer, properties, ctype, claim, createdAt },
+  payload: {
+    id,
+    attester,
+    claimer,
+    properties,
+    ctype,
+    claim,
+    status,
+    createdAt,
+  },
 }) => {
   return async (dispatch, getState) => {
     const credentials = getCredentials(getState());
@@ -50,6 +60,7 @@ export const addCredential = ({
       properties,
       ctype,
       claim,
+      status,
       createdAt,
     );
 
@@ -61,10 +72,34 @@ export const addCredential = ({
   };
 };
 
+export const verifyCredential = ({ payload: id }) => {
+  return async (dispatch, getState) => {
+    const credentials = getCredentials(getState());
+
+    const credential = credentials.getById(id);
+
+    const isCredentialOnChain = await KiltService.verifyCredential(credential);
+    console.log("isCredentialOnChain", isCredentialOnChain);
+
+    if (isCredentialOnChain) {
+      credential.status = CredentialStatus.VERIFIED;
+    } else {
+      credential.status = CredentialStatus.UNVERIFIED;
+    }
+
+    // update credentials
+    credentials.updateItem(id, credential);
+
+    // update redux store
+    dispatch(kiltActions.setCredentials(credentials));
+  };
+};
+
 const Aliases = {
   [kiltTypes.GENERATE_IDENTITY]: generateIdentity,
   [kiltTypes.CREATE_CREDENTIAL]: createCredential,
   [kiltTypes.ADD_CREDENTIAL]: addCredential,
+  [kiltTypes.VERIFY_CREDENTIAL]: verifyCredential,
 };
 
 export default Aliases;

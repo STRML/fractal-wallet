@@ -27,6 +27,7 @@ function CredentialsHome() {
   const credentials = useSelector(getCredentials);
 
   const createCredential = () => dispatch(kiltActions.createCredential());
+  const verifyCredential = (id) => dispatch(kiltActions.verifyCredential(id));
 
   return (
     <div className="Popup">
@@ -46,6 +47,7 @@ function CredentialsHome() {
                 <th>Attester</th>
                 <th>Claimer</th>
                 <th>Properties</th>
+                <th>Status</th>
               </tr>
             </thead>
             <tbody>
@@ -54,6 +56,12 @@ function CredentialsHome() {
                   <td>{truncate(elem.attester)}</td>
                   <td>{truncate(elem.claimer)}</td>
                   <td>{renderProperties(elem.properties)}</td>
+                  <td>
+                    <p>{elem.status}</p>
+                    <button onClick={() => verifyCredential(elem.id)}>
+                      Verify
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>

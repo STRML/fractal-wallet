@@ -10,6 +10,7 @@ const types = mirrorCreator([
   "SET_BALANCE",
   "SET_MNEMONIC",
   "SET_CREDENTIALS",
+  "VERIFY_CREDENTIAL",
   "REMOVE_CREDENTIAL",
 ]);
 
@@ -20,6 +21,7 @@ export const creators = createActions(
   types.SET_BALANCE,
   types.SET_MNEMONIC,
   types.SET_CREDENTIALS,
+  types.VERIFY_CREDENTIAL,
   types.REMOVE_CREDENTIAL,
 );
 
