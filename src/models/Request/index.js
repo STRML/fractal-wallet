@@ -33,6 +33,13 @@ export default class Request {
   static parse(str) {
     const { id, requester, content, type, status, createdAt } = JSON.parse(str);
 
-    return new Request(id, requester, content, type, status, createdAt);
+    return new Request(
+      id,
+      requester,
+      content,
+      type,
+      status,
+      new Date(createdAt),
+    );
   }
 }

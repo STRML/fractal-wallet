@@ -7,6 +7,10 @@ export default class Collection extends Array {
     return this.find((item) => item[field] === value);
   }
 
+  filterByField(field, value) {
+    return this.filter((item) => item[field] === value);
+  }
+
   removeByField(field, value) {
     const index = this.findIndex((element) => element[field] === value);
 
@@ -33,5 +37,19 @@ export default class Collection extends Array {
         return;
       }
     }
+  }
+
+  indexedByField(field) {
+    return this.reduce(
+      (previous, current) => ({
+        ...previous,
+        [current[field]]: current,
+      }),
+      {},
+    );
+  }
+
+  indexedById() {
+    return this.indexedByField("id");
   }
 }

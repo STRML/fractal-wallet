@@ -60,7 +60,7 @@ function DataCreate() {
           <strong>New entry</strong>
         </p>
         <select value={key} onChange={onChangeKey}>
-          {keys.map(({ key, name }) => (
+          {keys.map(({ key }) => (
             <option key={key}>{key}</option>
           ))}
         </select>

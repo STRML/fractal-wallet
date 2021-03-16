@@ -10,8 +10,12 @@ export default class CredentialsCollection extends Collection {
     return !!this.getData(key);
   }
 
-  getByCType(ctypeHash) {
-    return this.getByField("ctype", ctypeHash);
+  countByData(key, value) {
+    return this.filter(({ properties }) => properties[key] === value).length;
+  }
+
+  filterByCType(ctypeHash) {
+    return this.filterByField("ctype", ctypeHash);
   }
 
   static parse(str) {

@@ -3,6 +3,9 @@ import { createActions, handleActions } from "redux-actions";
 
 const types = mirrorCreator([
   "ADD_REQUEST",
+  "ACCEPT_SHARE_CREDENTIAL_REQUEST",
+  "ACCEPT_SHARE_DATA_REQUEST",
+  "ACCEPT_STORE_CREDENTIAL_REQUEST",
   "ACCEPT_REQUEST",
   "REQUEST_ACCEPTED",
   "REMOVE_REQUEST",
@@ -13,7 +16,9 @@ const types = mirrorCreator([
 
 export const creators = createActions(
   types.ADD_REQUEST,
-  types.ACCEPT_REQUEST,
+  types.ACCEPT_SHARE_CREDENTIAL_REQUEST,
+  types.ACCEPT_SHARE_DATA_REQUEST,
+  types.ACCEPT_STORE_CREDENTIAL_REQUEST,
   types.REQUEST_ACCEPTED,
   types.REMOVE_REQUEST,
   types.DECLINE_REQUEST,

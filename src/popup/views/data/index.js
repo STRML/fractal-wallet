@@ -30,7 +30,7 @@ function Data() {
               <tr>
                 <th>Key</th>
                 <th>Value</th>
-                <th>Status</th>
+                <th>Credentials</th>
                 <th />
               </tr>
             </thead>
@@ -39,7 +39,7 @@ function Data() {
                 <tr key={elem.key}>
                   <td>{elem.key}</td>
                   <td>{elem.value}</td>
-                  <td>{credentials.hasData(elem.key) ? "✓" : "?"}</td>
+                  <td>{credentials.countByData(elem.key, elem.value)}</td>
                   <td>
                     <button onClick={() => removeEntry(elem.id)}>Delete</button>
                   </td>

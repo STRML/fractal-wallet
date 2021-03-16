@@ -92,9 +92,17 @@ class KiltProtocol {
     return Kilt.Message.decrypt(message, identity);
   }
 
-  async buildPresentationMessage(identity, credential, target) {
+  async buildPresentationMessage(identity, credential, properties, target) {
+    const copiedCredential = Kilt.AttestedClaim.fromAttestedClaim(
+      JSON.parse(JSON.stringify(credential.claim)),
+    );
+    const removedProperties = Object.keys(properties).filter(
+      (property) => !properties[property],
+    );
+    copiedCredential.request.removeClaimProperties(removedProperties);
+
     const body = {
-      content: [credential.claim],
+      content: [copiedCredential],
       type: MessageBodyType.SUBMIT_CLAIMS_FOR_CTYPES,
     };
 

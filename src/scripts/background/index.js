@@ -138,7 +138,6 @@ async function init() {
     (message, target) =>
       new Promise((resolve, reject) => {
         const identity = getIdentity(store.getState());
-        const credentials = getCredentials(store.getState());
 
         const {
           body: {
@@ -148,10 +147,25 @@ async function init() {
           },
         } = KiltService.decryptMessage(identity, message);
 
+        const credentials = getCredentials(store.getState())
+        .filterByCType(
+          cTypeHash,
+        );
+
         const request = {
           id: uuidv4(),
           requester: target.address,
-          content: cTypeHash,
+          content: {
+            cTypeHash,
+            credential: credentials[0].id,
+            properties: Object.keys(credentials[0].properties).reduce(
+              (previous, current) => ({
+                ...previous,
+                [current]: true,
+              }),
+              {},
+            ),
+          },
           type: RequestTypes.SHARE_CREDENTIAL,
         };
 
@@ -179,10 +193,11 @@ async function init() {
               acceptedListener.unsubscribe();
               clearTimeout(requestTimeout);
 
-              const credential = credentials.getByCType(cTypeHash);
+              const credential = credentials.getById(acceptedRequest.content.credential);
               const response = await KiltService.buildPresentationMessage(
                 identity,
                 credential,
+                acceptedRequest.content.properties,
                 target,
               );
 

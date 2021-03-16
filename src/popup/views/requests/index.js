@@ -1,10 +1,7 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-import RequestTypes from "@models/Request/RequestTypes";
-
-import requestsActions from "@redux/requests";
 import {
   getAcceptedRequests,
   getPendingRequests,
@@ -21,124 +18,65 @@ function truncate(str, length = 10) {
   return str;
 }
 
-function renderShareRequestContent(content) {
-  const values = Object.values(content);
-
-  return values.map((value) => <p key={value}>{value}</p>);
-}
-
-function renderShareCredentialContent(content) {
-  return <p>{truncate(content)}</p>;
-}
-
-function renderCredentialRequestContent(content) {
-  const keys = Object.keys(content.properties);
-
-  return keys.map((key) => (
-    <p key={key}>{`${key} - ${content.properties[key]}`}</p>
-  ));
-}
-
-function renderContent(content, type) {
-  if (type === RequestTypes.SHARE_DATA) {
-    return renderShareRequestContent(content);
-  }
-
-  if (type === RequestTypes.SHARE_CREDENTIAL) {
-    return renderShareCredentialContent(content);
-  }
-
-  return renderCredentialRequestContent(content);
-}
-
-function renderAcceptedRequests(requests) {
+function renderRequests(requests) {
   return (
     <>
-      <p>Accepted</p>
       <table>
         <thead>
           <tr>
+            <th>Id</th>
             <th>Requester</th>
-            <th>Content</th>
             <th>Type</th>
+            <th>Date</th>
           </tr>
         </thead>
         <tbody>
-          {requests.map((elem) => (
-            <tr key={elem.id}>
-              <td>{truncate(elem.requester)}</td>
-              <td>{renderContent(elem.content, elem.type)}</td>
-              <td>{elem.type}</td>
+          {requests.sortByDate().map((request) => (
+            <tr key={request.id}>
+              <td>
+                <Link to={`requests/${request.id}`}>
+                  {truncate(request.id, 8)}
+                </Link>
+              </td>
+              <td>{truncate(request.requester)}</td>
+              <td>{request.type}</td>
+              <td>{request.createdAt.toLocaleString()}</td>
             </tr>
           ))}
         </tbody>
       </table>
     </>
+  );
+}
+
+function renderAcceptedRequests(requests) {
+  return (
+    <div>
+      <p>Accepted</p>
+      {renderRequests(requests)}
+    </div>
   );
 }
 
 function renderDeclinedRequests(requests) {
   return (
-    <>
+    <div>
       <p>Declined</p>
-      <table>
-        <thead>
-          <tr>
-            <th>Requester</th>
-            <th>Content</th>
-            <th>Type</th>
-          </tr>
-        </thead>
-        <tbody>
-          {requests.map((elem) => (
-            <tr key={elem.id}>
-              <td>{truncate(elem.requester)}</td>
-              <td>{renderContent(elem.content, elem.type)}</td>
-              <td>{elem.type}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </>
+      {renderRequests(requests)}
+    </div>
   );
 }
 
-function renderPendingRequests(requests, acceptCallback, declineCallback) {
+function renderPendingRequests(requests) {
   return (
-    <>
+    <div>
       <p>Pending</p>
-      <table>
-        <thead>
-          <tr>
-            <th>Requester</th>
-            <th>Content</th>
-            <th>Type</th>
-            <th />
-          </tr>
-        </thead>
-        <tbody>
-          {requests.map((elem) => (
-            <tr key={elem.id}>
-              <td>{truncate(elem.requester)}</td>
-              <td>{renderContent(elem.content, elem.type)}</td>
-              <td>{elem.type}</td>
-              <td>
-                <button onClick={() => acceptCallback(elem.id)}>Accept</button>
-                <button onClick={() => declineCallback(elem.id)}>
-                  Decline
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </>
+      {renderRequests(requests)}
+    </div>
   );
 }
 
 function RequestsIndex() {
-  const dispatch = useDispatch();
-
   const pending = useSelector(getPendingRequests);
   const accepted = useSelector(getAcceptedRequests);
   const declined = useSelector(getDeclinedRequests);
@@ -150,9 +88,6 @@ function RequestsIndex() {
   const hasRequets =
     hasDeclinedRequets || hasAcceptedRequets || hasPendingRequets;
 
-  const acceptRequest = (id) => dispatch(requestsActions.acceptRequest(id));
-  const declineRequet = (id) => dispatch(requestsActions.declineRequest(id));
-
   return (
     <div className="Popup">
       <Link to="/home">Back</Link>
@@ -163,8 +98,7 @@ function RequestsIndex() {
       {!hasRequets && <p>No data requests.</p>}
       {hasRequets && (
         <div>
-          {hasPendingRequets &&
-            renderPendingRequests(pending, acceptRequest, declineRequet)}
+          {hasPendingRequets && renderPendingRequests(pending)}
           {hasAcceptedRequets && renderAcceptedRequests(accepted)}
           {hasDeclinedRequets && renderDeclinedRequests(declined)}
         </div>

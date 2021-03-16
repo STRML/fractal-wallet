@@ -10,6 +10,7 @@ import DataIndex from "@popup/views/data";
 import DataCreate from "@popup/views/data/create";
 
 import RequestsIndex from "@popup/views/requests";
+import RequestsShow from "@popup/views/requests/show";
 
 import Home from "@popup/views/home";
 import Landing from "@popup/views/landing";
@@ -28,6 +29,7 @@ function App() {
               </Switch>
             </Route>
             <Route path="/credentials" component={CredentialsIndex} />
+            <Route path="/requests/:id" component={RequestsShow} />
             <Route path="/requests" component={RequestsIndex} />
             <Route path="/" component={withRedirectToQueryRoute(Home)} />
           </Switch>

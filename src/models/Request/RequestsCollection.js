@@ -27,4 +27,14 @@ export default class RequestsCollection extends Collection {
 
     return new RequestsCollection(...elements);
   }
+
+  sortByDate(direction = "desc") {
+    return this.sort((itemA, itemB) => {
+      if (direction === "asc") {
+        return itemA.createdAt - itemB.createdAt;
+      }
+
+      return itemB.createdAt - itemA.createdAt;
+    });
+  }
 }

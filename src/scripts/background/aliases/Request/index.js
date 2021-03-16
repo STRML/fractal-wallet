@@ -6,7 +6,6 @@ import { getRequests } from "@redux/selectors";
 
 import Request from "@models/Request";
 import RequestStatus from "@models/Request/RequestStatus";
-import RequestTypes from "@models/Request/RequestTypes";
 
 export const addRequest = ({ payload: { id, requester, content, type } }) => {
   return async (dispatch, getState) => {
@@ -29,12 +28,37 @@ export const addRequest = ({ payload: { id, requester, content, type } }) => {
       left: 0,
       top: 0,
       type: "popup",
-      url: "popup.html?route=requests",
+      url: `popup.html?route=requests/${request.id}`,
     });
   };
 };
 
-export const acceptRequest = ({ payload: id }) => {
+export const acceptShareCredentialRequest = ({ payload: { id, credential, properties } }) => {
+  return async (dispatch, getState) => {
+    const requests = getRequests(getState());
+
+    // get request
+    const acceptedRequest = requests.getById(id);
+    acceptedRequest.status = RequestStatus.ACCEPTED;
+    acceptedRequest.content.credential = credential;
+    acceptedRequest.content.properties = properties;
+
+    // update request status
+    requests.updateItem(id, acceptedRequest);
+
+    // update redux store
+    dispatch(requestsActions.setRequests(requests));
+    dispatch(requestsActions.requestAccepted(acceptedRequest));
+
+    // close new window popup if open
+    const currentWindow = await chrome.windows.getCurrent();
+    if (currentWindow.type === "popup") {
+      await chrome.windows.remove(currentWindow.id);
+    }
+  };
+};
+
+export const acceptShareDataRequest = ({ payload: id }) => {
   return async (dispatch, getState) => {
     const requests = getRequests(getState());
 
@@ -49,10 +73,29 @@ export const acceptRequest = ({ payload: id }) => {
     dispatch(requestsActions.setRequests(requests));
     dispatch(requestsActions.requestAccepted(acceptedRequest));
 
-    // check if it's a store credential request type
-    if (acceptedRequest.type === RequestTypes.STORE_CREDENTIAL) {
-      dispatch(kiltActions.addCredential(acceptedRequest.content));
+    // close new window popup if open
+    const currentWindow = await chrome.windows.getCurrent();
+    if (currentWindow.type === "popup") {
+      await chrome.windows.remove(currentWindow.id);
     }
+  };
+};
+
+export const acceptStoreCredentialRequest = ({ payload: id }) => {
+  return async (dispatch, getState) => {
+    const requests = getRequests(getState());
+
+    // get request
+    const acceptedRequest = requests.getById(id);
+    acceptedRequest.status = RequestStatus.ACCEPTED;
+
+    // update request status
+    requests.updateItem(id, acceptedRequest);
+
+    // update redux store
+    dispatch(requestsActions.setRequests(requests));
+    dispatch(requestsActions.requestAccepted(acceptedRequest));
+    dispatch(kiltActions.addCredential(acceptedRequest.content));
 
     // close new window popup if open
     const currentWindow = await chrome.windows.getCurrent();
@@ -102,7 +145,9 @@ export const declineRequest = ({ payload: id }) => {
 
 const Aliases = {
   [requestsTypes.ADD_REQUEST]: addRequest,
-  [requestsTypes.ACCEPT_REQUEST]: acceptRequest,
+  [requestsTypes.ACCEPT_SHARE_CREDENTIAL_REQUEST]: acceptShareCredentialRequest,
+  [requestsTypes.ACCEPT_SHARE_DATA_REQUEST]: acceptShareDataRequest,
+  [requestsTypes.ACCEPT_STORE_CREDENTIAL_REQUEST]: acceptStoreCredentialRequest,
   [requestsTypes.REMOVE_REQUEST]: removeRequest,
   [requestsTypes.DECLINE_REQUEST]: declineRequest,
 };
