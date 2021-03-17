@@ -22,13 +22,17 @@ function ShareCredentialRequest(props) {
   const isPending = request.status === RequestStatus.PENDING;
 
   const acceptRequest = () =>
-    dispatch(requestsActions.acceptShareCredentialRequest({
-      id: request.id,
-      credential: selectedCredentialId,
-      properties: selectedProperties,
-    }));
+    dispatch(
+      requestsActions.acceptShareCredentialRequest({
+        id: request.id,
+        credential: selectedCredentialId,
+        properties: selectedProperties,
+      }),
+    );
   const declineRequest = () =>
     dispatch(requestsActions.declineRequest(request.id));
+  const ignoreRequest = () =>
+    dispatch(requestsActions.ignoreRequest(request.id));
 
   return (
     <div className="Popup">
@@ -104,6 +108,7 @@ function ShareCredentialRequest(props) {
             <>
               <button onClick={acceptRequest}>Accept</button>
               <button onClick={declineRequest}>Decline</button>
+              <button onClick={ignoreRequest}>Ignore</button>
             </>
           )}
         </div>

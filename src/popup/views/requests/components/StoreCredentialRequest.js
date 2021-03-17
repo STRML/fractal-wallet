@@ -42,6 +42,8 @@ function StoreCredentialRequest(props) {
     dispatch(requestsActions.acceptStoreCredentialRequest(request.id));
   const declineRequest = () =>
     dispatch(requestsActions.declineRequest(request.id));
+  const ignoreRequest = () =>
+    dispatch(requestsActions.ignoreRequest(request.id));
 
   return (
     <div className="Popup">
@@ -78,6 +80,7 @@ function StoreCredentialRequest(props) {
             <>
               <button onClick={acceptRequest}>Accept</button>
               <button onClick={declineRequest}>Decline</button>
+              <button onClick={ignoreRequest}>Ignore</button>
             </>
           )}
         </div>

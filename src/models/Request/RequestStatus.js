@@ -1,7 +1,7 @@
 const status = {
-  PENDING: "pending",
-  DECLINED: "declined",
   ACCEPTED: "accepted",
+  DECLINED: "declined",
+  PENDING: "pending",
   TIMED_OUT: "timed_out",
 };
 

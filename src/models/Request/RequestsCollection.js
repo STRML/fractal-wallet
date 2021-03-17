@@ -8,16 +8,16 @@ export default class RequestsCollection extends Collection {
     return this.filter(({ status: itemStatus }) => itemStatus === status);
   }
 
-  getPending() {
-    return this.filterByStatus(RequestStatus.PENDING);
-  }
-
   getAccepted() {
     return this.filterByStatus(RequestStatus.ACCEPTED);
   }
 
   getDeclined() {
     return this.filterByStatus(RequestStatus.DECLINED);
+  }
+
+  getPending() {
+    return this.filterByStatus(RequestStatus.PENDING);
   }
 
   static parse(str) {

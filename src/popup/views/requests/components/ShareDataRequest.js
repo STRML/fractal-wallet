@@ -21,6 +21,8 @@ function ShareDataRequest(props) {
     dispatch(requestsActions.acceptShareDataRequest(request.id));
   const declineRequest = () =>
     dispatch(requestsActions.declineRequest(request.id));
+  const ignoreRequest = () =>
+    dispatch(requestsActions.ignoreRequest(request.id));
 
   return (
     <div className="Popup">
@@ -57,6 +59,7 @@ function ShareDataRequest(props) {
             <>
               <button onClick={acceptRequest}>Accept</button>
               <button onClick={declineRequest}>Decline</button>
+              <button onClick={ignoreRequest}>Ignore</button>
             </>
           )}
         </div>

@@ -33,7 +33,9 @@ export const addRequest = ({ payload: { id, requester, content, type } }) => {
   };
 };
 
-export const acceptShareCredentialRequest = ({ payload: { id, credential, properties } }) => {
+export const acceptShareCredentialRequest = ({
+  payload: { id, credential, properties },
+}) => {
   return async (dispatch, getState) => {
     const requests = getRequests(getState());
 
@@ -105,6 +107,24 @@ export const acceptStoreCredentialRequest = ({ payload: id }) => {
   };
 };
 
+export const ignoreRequest = ({ payload: id }) => {
+  return async (dispatch, getState) => {
+    const requests = getRequests(getState());
+
+    // get request
+    const ignoredRequest = requests.getById(id);
+
+    // remove request from redux store
+    dispatch(requestsActions.removeRequest(ignoredRequest.id));
+
+    // close new window popup if open
+    const currentWindow = await chrome.windows.getCurrent();
+    if (currentWindow.type === "popup") {
+      await chrome.windows.remove(currentWindow.id);
+    }
+  };
+};
+
 export const removeRequest = ({ payload: id }) => {
   return async (dispatch, getState) => {
     const requests = getRequests(getState());
@@ -148,6 +168,7 @@ const Aliases = {
   [requestsTypes.ACCEPT_SHARE_CREDENTIAL_REQUEST]: acceptShareCredentialRequest,
   [requestsTypes.ACCEPT_SHARE_DATA_REQUEST]: acceptShareDataRequest,
   [requestsTypes.ACCEPT_STORE_CREDENTIAL_REQUEST]: acceptStoreCredentialRequest,
+  [requestsTypes.IGNORE_REQUEST]: ignoreRequest,
   [requestsTypes.REMOVE_REQUEST]: removeRequest,
   [requestsTypes.DECLINE_REQUEST]: declineRequest,
 };

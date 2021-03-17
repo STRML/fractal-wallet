@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 
 import {
   getAcceptedRequests,
-  getPendingRequests,
   getDeclinedRequests,
+  getPendingRequests,
 } from "@redux/selectors";
 
 import "@popup/styles.css";
@@ -77,16 +77,16 @@ function renderPendingRequests(requests) {
 }
 
 function RequestsIndex() {
-  const pending = useSelector(getPendingRequests);
   const accepted = useSelector(getAcceptedRequests);
   const declined = useSelector(getDeclinedRequests);
+  const pending = useSelector(getPendingRequests);
 
-  const hasPendingRequets = pending.length > 0;
-  const hasAcceptedRequets = accepted.length > 0;
-  const hasDeclinedRequets = declined.length > 0;
+  const hasAcceptedRequests = accepted.length > 0;
+  const hasDeclinedRequests = declined.length > 0;
+  const hasPendingRequests = pending.length > 0;
 
-  const hasRequets =
-    hasDeclinedRequets || hasAcceptedRequets || hasPendingRequets;
+  const hasRequests =
+    hasDeclinedRequests || hasAcceptedRequests || hasPendingRequests;
 
   return (
     <div className="Popup">
@@ -95,12 +95,12 @@ function RequestsIndex() {
       <h2>
         <strong>Requests</strong>
       </h2>
-      {!hasRequets && <p>No data requests.</p>}
-      {hasRequets && (
+      {!hasRequests && <p>No data requests.</p>}
+      {hasRequests && (
         <div>
-          {hasPendingRequets && renderPendingRequests(pending)}
-          {hasAcceptedRequets && renderAcceptedRequests(accepted)}
-          {hasDeclinedRequets && renderDeclinedRequests(declined)}
+          {hasPendingRequests && renderPendingRequests(pending)}
+          {hasAcceptedRequests && renderAcceptedRequests(accepted)}
+          {hasDeclinedRequests && renderDeclinedRequests(declined)}
         </div>
       )}
     </div>
