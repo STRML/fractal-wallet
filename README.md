@@ -38,6 +38,11 @@ To setup the project you need to follow these instructions:
 $ git clone git@github.com:subvisual/fractal-poc.git
 ```
 
+- Go to the wallet project directory:
+```sh
+$ cd wallet
+```
+
 - Run the setup steps:
 ```sh
 $ ./bin/setup
