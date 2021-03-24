@@ -18,9 +18,8 @@ inpageAttester
     const { version } = chrome.runtime.getManifest();
     return version;
   })
-  .proxy("broadcastCredential")
-  .proxy("getProperties")
   .proxy("getPublicIdentity")
+  .proxy("broadcastCredential")
   .proxy("requestAttestation");
 
 inpagePublisher
@@ -29,4 +28,4 @@ inpagePublisher
     return version;
   })
   .proxy("getPublicIdentity")
-  .proxy("getCredential");
+  .proxy("requestCredential");
